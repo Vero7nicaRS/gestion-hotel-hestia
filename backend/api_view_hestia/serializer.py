@@ -11,6 +11,7 @@ class TipoHabitacionSerializer(serializers.ModelSerializer):
         read_only_fields = ['id']
 
 class HabitacionSerializer(serializers.ModelSerializer):
+    idtipo_habitacion=TipoHabitacionSerializer(readOnly=True)
     class Meta:
         model = Habitacion
         fields = ['id', 'numero', 'idtipo_habitacion', 'estado']
@@ -24,6 +25,7 @@ class TipoSalaSerializer(serializers.ModelSerializer):
         read_only_fields = ['id']
 
 class SalaSerializer(serializers.ModelSerializer):
+    idtipo_sala=TipoHabitacionSerializer(readOnly=True)
     class Meta:
         model = Sala
         fields = ['id', 'numero', 'idtipo_sala', 'estado']
@@ -38,6 +40,9 @@ class ClienteSerializer(serializers.ModelSerializer):
 
 #----------- RESERVA API SERIALIZERS -----------
 class ReservaSerializer(serializers.ModelSerializer):
+    idcliente = ClienteSerializer(read_only=True)
+    estado= serializers.CharField(source='get_estado_display', readOnly=True)
+    tipo_reserva= serializers.CharField(source='get_TipoReserva', readOnly=True)
     class Meta:
         model = Reserva
         fields = ['id', 'idcliente','estado','tipo_reserva','fecha_reserva']
