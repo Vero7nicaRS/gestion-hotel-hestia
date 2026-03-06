@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Habitacion, TipoHabitacion, TipoSala, Sala, Cliente, Reserva, ReservaSala, ReservaHabitacion
-from .serializer import HabitacionSerializer, TipoHabitacionSerializer, TipoSalaSerializer, SalaSerializer, clienteSerializer, reservaSerializer, reserva_salaSerializer, reserva_habitacionSerializer
+from .serializer import HabitacionSerializer, TipoHabitacionSerializer, TipoSalaSerializer, SalaSerializer, ClienteSerializer, ReservaSerializer, ReservaSalaSerializer, ReservaHabitacionSerializer
 
 from rest_framework import viewsets
 
