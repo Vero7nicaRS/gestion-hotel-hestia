@@ -25,6 +25,9 @@ class TipoHabitacionSerializer(serializers.ModelSerializer):
 #  "id": 1,
 #  "numero": "253",
 #  "estado": "DISPONIBLE",
+#  "tipo_habitacion": 3
+#}     ||
+#      \/ (Lo que tiene "tipo_habitacion")
 #  "tipo_habitacion": {
 #    "id": 3,
 #    "nombre": "Doble",
