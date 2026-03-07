@@ -1,0 +1,152 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+/*fuentes tipograficas*/
+@font-face {
+  font-family: 'poppinsR';
+  src: url('./src/ttf/poppins-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'poppinsB';
+  src: url('./src/ttf/Poppins-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'poppinsI';
+  src: url('./src/ttf/Poppins-Italic.ttf') format('truetype');
+}
+/*contenido formulario*/
+form{
+    background: #F2F2F2;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    font-family: 'poppinsR';
+    padding: 0 20px 0 10px;
+}
+/*Textos*/
+.titulo{
+  color: #ED1C24;
+  font-family: 'poppinsR';
+  text-align: center;
+  font-size: 22px;
+  margin-top: 10px;
+}
+strong{
+    font-family: 'poppinsB';
+}
+.subtitulos{
+  font-family: 'poppinsI';
+  background: #ED1C24;
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+  padding-left: 15px;
+  width: 140px;
+}
+/*Contenedor del formulario*/
+.card-formulario{
+  display:flex;
+  flex-direction:column;
+  gap:25px;
+}
+/*grid de nombre, correo y teléfono*/
+.grid-personales{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+.nombre{
+  grid-column: span 2;
+}
+/*grid de habitación, #personas fecha de entrada y salida*/
+.grid-habitacion{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+/*grid de total, #noches seleccionadas, total*/
+.grid-total{
+  display:grid;
+  grid-template-columns:1fr auto auto;
+  align-items:center;
+  gap:20px;
+}
+/*Estilo formularios*/
+.grupo-formulario{
+  position: relative;
+  width:100%;
+}
+.grupo-formulario input,
+.grupo-formulario select{
+  width: 100%;
+  padding: 4px;
+  border: 2px solid white;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  background: white;
+  transition: 0.3s ease;
+}
+.grupo-formulario label {
+  position: absolute;
+  left: 12px;
+  top: 3px;
+  color: #888;
+  background: white;
+  border-radius: 4px;
+  padding: 0 4px;
+  transition: 0.3s ease;
+  pointer-events: none;
+}
+/* Enfocado */
+.grupo-formulario input:before,
+.grupo-formulario select:before {
+  border-color: #ED1C24;
+}
+/* Cuando va a escribir texto */
+.grupo-formulario input:not(:placeholder-shown) + label,
+.grupo-formulario input:focus + label,
+.grupo-formulario select:focus + label,
+.grupo-formulario select:valid + label {
+  top: -8px;
+  font-size: 12px;
+  color: #ED1C24;
+  background: #F2F2F2;
+}
+/* Cuando tiene texto */
+.grupo-formulario input:valid,
+.grupo-formulario select:valid{
+    border-color: #ED1C24;
+    background: #F2F2F2;
+    color: #888;
+}   
+.total{
+    background: #888;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    border-radius: 20px;
+}
+.total p{
+    font-family: 'poppinsB';
+    font-size: 24px;
+}
+.noches-reservadas{
+    text-align: center;
+    color: #888;
+}
+/* Botón */
+button {
+  padding: 7px;
+  background: #ED1C24;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-bottom: 15px;
+}
+button:hover {
+  background: #c4161d;
+}
