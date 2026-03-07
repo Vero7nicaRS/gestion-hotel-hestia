@@ -1,7 +1,7 @@
 
 
 :root {
-  --admin-primary: #AC8968;
+  --admin-primary: #ED1C24;
   --admin-secondary: #C9B8A8;
   --admin-accent: #D4C5B9;
   --admin-dark: #1F1F1F;
@@ -171,7 +171,7 @@
 }
 
 .admin-btn-primary:hover {
-  background-color: #8E6F52;
+  background-color: #C62828;
 }
 
 .admin-btn-success {
