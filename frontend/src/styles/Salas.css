@@ -1,0 +1,220 @@
+@font-face {
+  font-family: 'poppinsR';
+  src: url('../assets/fonts/Poppins-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'poppinsB';
+  src: url('../assets/fonts/Poppins-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'poppinsI';
+  src: url('../assets/fonts/Poppins-Italic.ttf') format('truetype');
+}
+
+/* ========== CONTENEDOR PRINCIPAL ========== */
+.salas-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #fff;
+  font-family: 'poppinsR', sans-serif;
+}
+
+/* ========== CARD DE SALA ========== */
+.sala-card {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.sala-titulo {
+  font-family: 'poppinsB', sans-serif;
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+/* ========== GALERÍA DE IMÁGENES ========== */
+.sala-galeria {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.galeria-miniaturas {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.miniatura {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.3s, transform 0.2s;
+}
+
+.miniatura:hover {
+  border-color: #ED1C24;
+  transform: scale(1.05);
+}
+
+.miniatura.activa {
+  border-color: #ED1C24;
+}
+
+.galeria-principal {
+  flex: 1;
+  max-width: 600px;
+}
+
+.imagen-principal {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.sala-descripcion {
+  color: #333;
+  margin: 1rem 0;
+}
+
+.sala-precio {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #000;
+}
+
+/* ========== FORMULARIO DE RESERVA ========== */
+.reserva-formulario {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  max-width: 800px;
+  margin: 2rem auto;
+  border: 1px solid #eee;
+}
+
+.reserva-formulario h2 {
+  color: #ED1C24;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitulo {
+  color: #000;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.5rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  color: #000;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #ED1C24;
+}
+
+.form-group input::placeholder {
+  color: #999;
+}
+
+.form-reserva-datos {
+  background: #ED1C24;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.form-reserva-datos .form-group label {
+  color: #fff;
+}
+
+.btn-reservar {
+  background: #ED1C24;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s;
+}
+
+.btn-reservar:hover {
+  background: #000;
+}
+
+/* ========== ESTADOS ========== */
+.loading,
+.error {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.2rem;
+}
+
+.error {
+  color: #ED1C24;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .sala-galeria {
+    flex-direction: column;
+  }
+
+  .galeria-miniaturas {
+    flex-direction: row;
+    justify-content: center;
+    order: 2;
+  }
+
+  .galeria-principal {
+    order: 1;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+
+  .miniatura {
+    width: 80px;
+    height: 60px;
+  }
+}

@@ -4,7 +4,7 @@ from .serializer import HabitacionSerializer, TipoHabitacionSerializer, SalaSeri
 from datetime import date
 from rest_framework.response import Response
 from rest_framework import status
-#from rest_framework.generic import ListAPIView
+from rest_framework.generics import ListAPIView
 
 #----------- OBTENER DATOS DEL CLIENTE -----------
 def obtener_o_crear_cliente(request):
@@ -15,38 +15,16 @@ def obtener_o_crear_cliente(request):
             status=400
         )
     clientes, _ = Cliente.objects.get_or_create(
-        email=datos_cliente["email"],
-        defaults={"nombre": datos_cliente["nombre"]}
+    email=datos_cliente["email"],
+    defaults={
+        "nombre": datos_cliente["nombre"],
+        "telefono": datos_cliente["telefono"]
+        }
     )
     return clientes,  None
 #----------- HABITACION API VIEWS -----------
 
-#----------- SALA API VIEWS -----------
-class TipoSalaList(APIView):
-    def get(self, request):
-        tipos_sala = TipoSala.objects.all()
-        if not tipos_sala.exists():
-            return Response(
-                {"message": "No hay tipos de sala disponibles en este momento"}, 
-                status=status.HTTP_404_NOT_FOUND
-            )
-        serializer = TipoSalaSerializer(tipos_sala, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    
 
-class SalaList(APIView):
-    def get(self, request):
-        salas = Sala.objects.filter(estado='disponible')
-        
-        if not salas.exists():
-            return Response(
-                {"message": "No hay salas disponibles en este momento"}, 
-                status=status.HTTP_404_NOT_FOUND
-            )
-        
-        serializer = SalaSerializer(salas, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    
 
 #----------- RESERVA API VIEWS -----------
 #Habitacion
@@ -76,5 +54,43 @@ class ReservaHabitacionView(APIView):
                 "confirmacion": clientes.email
             },status=201)
         return Response(serializer.errors, status=400)
-
 #Sala
+class ReservaSalaView(APIView):
+
+    def post(self, request):
+
+        clientes, error = obtener_o_crear_cliente(request)
+        if error:
+            return error
+
+        nueva_reserva = Reserva.objects.create(
+            cliente=clientes,
+            tipo_reserva="SALA",
+            fecha_reserva=date.today()
+        )
+
+        serializer = ReservaSalaSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save(reserva=nueva_reserva)
+
+            return Response({
+                "mensaje": f"Reserva de sala creada #{nueva_reserva.id}",
+                "confirmacion_a": clientes.email
+            }, status=201)
+
+        return Response(serializer.errors, status=400)
+    
+    
+
+
+class HabitacionListView(ListAPIView):
+    def get_queryset(self):
+        return Habitacion.objects.filter(estado="DISPONIBLE")
+    serializer_class = HabitacionSerializer
+
+class SalaListView(ListAPIView):
+    def get_queryset(self):
+        return Sala.objects.filter(estado="DISPONIBLE")
+    serializer_class = SalaSerializer
+
