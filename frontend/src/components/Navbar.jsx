@@ -11,28 +11,28 @@ function NavBar() {
   return (
     <Navbar expand="lg" className="navbar-contenedor" fixed="top">
       <Container>
-        <Navbar.Brand as={Link} to="/">
+        <Navbar.Brand href="#home">
             <img className="navbar-logo" src={logoHestia} alt = "Logo blanco Hestia"/>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="navbar-dropdown">
             <NavDropdown title="Habitaciones" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Link} to="/habitacion/1/">Sencilla</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.1">Sencilla</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item as={Link} to="/habitacion/1/">Doble</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">Doble</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item as={Link} to="/habitacion/1/">Premium</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Premium</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item as={Link} to="/habitacion/1/">Familiar</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Familiar</NavDropdown.Item>
             </NavDropdown>
             <NavDropdown title="Salas" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Link} to="/salas/">Eco</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.1">Eco</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item as={Link} to="/salas/">Pro</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">Pro</NavDropdown.Item>
             </NavDropdown>
             <Nav.Link as={Link} to="/contacto">Contacto</Nav.Link>
-            <Nav.Link className="navbar-reservas" as={Link} to="/admin" >Administracion</Nav.Link>
+            <Nav.Link className="navbar-reservas" as={Link} to="/contacto" >Reservas</Nav.Link>
 
             <Nav.Link as={Link} to="/usuario">
               <img className="navbar-usuario" src={iconoUsuario} alt = "Logo blanco Hestia"/>
