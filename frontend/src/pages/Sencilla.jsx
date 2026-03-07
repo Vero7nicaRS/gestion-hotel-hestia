@@ -1,4 +1,5 @@
-import FormularioCliente from "../components/FormularioHabitacion";
+import FormularioHabitacion from "../components/FormularioHabitacion";
+import FormularioSala from "../components/FormularioSala";
 import "../styles/Sencilla.css";
 
 export default function Sencilla() {
@@ -30,9 +31,11 @@ export default function Sencilla() {
           </ul>
         </div>
         <div className="formulario">
-          <FormularioCliente tipoHabitacion="DOBLE" />
+          <FormularioHabitacion tipoHabitacion="DOBLE" />
         </div>
-        
+        <div className="formulario">
+          <FormularioSala />
+        </div>
 
       </div>
 

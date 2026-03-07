@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "../styles/FormularioHabitacion.css";
+import "../styles/Formulario.css";
 
 export default function FormularioHabitacion({ tipoHabitacion }) {
   const [formData, setFormData] = useState({
