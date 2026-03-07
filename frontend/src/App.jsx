@@ -7,6 +7,7 @@ import NavBar from "./components/NavBar";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Footer from './components/Footer';
 import Salas from './pages/Salas';
+import AdminDashboard from './pages/admin/AdminDashboard';
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
         <Route path="/" element={<Navigate to="/habitacion/1" replace />} />  
         <Route path="/habitacion/:id" element={<HabitacionDetalle />} />
         <Route path="/salas" element={<Salas />} />
-        <Route path="/navbar" element={<NavBar />} />
+        <Route path="/admin" element={<AdminDashboard />} />
         <Route path='*' element={<p>404: Página no encontrada</p>} />
       </Routes>
 

@@ -61,24 +61,25 @@ class SalaSerializer(serializers.ModelSerializer):
 class ClienteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cliente
-        fields = ['id', 'nombre', 'email']
+        fields = ['id', 'nombre', 'email', 'telefono']
         read_only_fields = ['id']
 
 #----------- RESERVA API SERIALIZERS -----------
 class ReservaSerializer(serializers.ModelSerializer):
+    cliente = ClienteSerializer(read_only=True)
     class Meta:
         model = Reserva
-        fields = ['id', 'idcliente','estado','tipo_reserva','fecha_reserva']
+        fields = ['id', 'cliente','estado','tipo_reserva','fecha_reserva']
         read_only_fields = ['id']
 
 class ReservaSalaSerializer(serializers.ModelSerializer):
     class Meta:
         model = ReservaSala
-        fields = ['id', 'idreserva', 'idsala','numero_personas','fecha_uso', 'hora_inicio', 'hora_fin']
+        fields = ['id', 'reserva', 'sala','numero_personas','fecha_uso', 'hora_inicio', 'hora_fin']
         read_only_fields = ['id']
 
 class ReservaHabitacionSerializer(serializers.ModelSerializer):
     class Meta:
         model = ReservaHabitacion
-        fields = ['id', 'idreserva', 'idhabitacion','numero_personas','fecha_entrada', 'fecha_salida']
+        fields = ['id', 'reserva', 'habitacion','numero_personas','fecha_entrada', 'fecha_salida']
         read_only_fields = ['id']
