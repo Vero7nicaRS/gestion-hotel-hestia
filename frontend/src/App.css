@@ -5,6 +5,11 @@
   text-align: center;
 }
 
+/* Para que no esté pegado el NavBar del contenido de la página */
+body{
+  padding-top: 80px;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

@@ -1,15 +1,24 @@
+from django.shortcuts import render
+from .models import Habitacion, TipoHabitacion, TipoSala, Sala, Cliente, Reserva, ReservaSala, ReservaHabitacion
+from .serializer import HabitacionSerializer, TipoHabitacionSerializer, TipoSalaSerializer, SalaSerializer, ClienteSerializer, ReservaSerializer, ReservaSalaSerializer, ReservaHabitacionSerializer
+
 from rest_framework import viewsets
-from .models import Habitacion, TipoHabitacion, Sala, TipoSala, Cliente
-from .serializer import HabitacionSerializer, TipoHabitacionSerializer, SalaSerializer, TipoSalaSerializer, ClienteSerializer
-from rest_framework.response import Response
-from rest_framework import status
 
-#----------- HABITACION API VIEWS -----------
+# Create your views here.
+# VIEWSETS
+# ---------------------------------------------- HABITACION ---------------------------------------------
+class TipoHabitacionViewSet(viewsets.ModelViewSet):
+    queryset = TipoHabitacion.objects.all().order_by('nombre') # Obtener la informacion
+    serializer_class = TipoHabitacionSerializer   
+    lookup_field = 'pk'
 
 
+class HabitacionViewSet(viewsets.ModelViewSet):
+    queryset = Habitacion.objects.all().order_by('numero') # Obtener la informacion
+    serializer_class = HabitacionSerializer
+    lookup_field = 'pk'
 
-
-#----------- SALA API VIEWS -----------
+# ---------------------------------------------- SALA ---------------------------------------------
 class SalaViewSet(viewsets.ModelViewSet):
     queryset = Sala.objects.all()
     serializer_class = SalaSerializer
