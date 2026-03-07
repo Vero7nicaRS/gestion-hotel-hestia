@@ -123,7 +123,7 @@
 /*------------------------------------ CONTENEDOR PRECIOS -------------------------------------*/
 
 .hd-contenedor-precios{
-  border:1px solid rgb(203, 226, 56);
+  border:1px solid rgb(0, 0, 0);
   box-shadow:0 2px 8px rgba(0,0,0,0.1);
   background:#F2F2F2 ;
   border-radius:10px;
@@ -145,7 +145,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: left;
-  border: #000000 solid 1px;
+  /*border: #000000 solid 1px;*/
 }
 
 
@@ -176,13 +176,13 @@
 }
 
 .hd-precio{
-  border: #ED1C24 solid 1px;
+  /*border: #ED1C24 solid 1px;*/
   font-size:50px;
   font-weight:bold;
 }
 
 .hd-precio-noche{
-  border:#000000  solid 1px;
+  /*border:#000000  solid 1px;*/
   font-size:13px;
   color:#606060;
 }
@@ -190,7 +190,7 @@
 /*------------------------------------ CONTENEDOR DETALLES -------------------------------------*/
 
 .hd-contenedor-detalles{
-  border:1px solid red;
+  /*border:1px solid red;*/
   margin-top: 30px;   /* solo arriba */
   margin-left: 0;     /* izquierda */
   margin-right: 0;    /* derecha */
@@ -215,7 +215,7 @@
 /*------------------------------------ CONTENEDOR COMODIDADES -------------------------------------*/
 
 .hd-contenedor-comodidades{
-  border:1px solid red;
+  /*border:1px solid red;*/
   margin-top: 30px;   /* solo arriba */
   margin-left: 0;     /* izquierda */
   margin-right: 0;    /* derecha */
@@ -229,11 +229,11 @@
   flex-direction: row;
   flex-wrap: wrap;
 
-  border: #e030ea solid 1px;
+  /*border: #e030ea solid 1px;*/
 }
 
 .hd-comodidades-izq , .hd-comodidades-der{ 
-    border: #7bf762 solid 1px;
+   /* border: #7bf762 solid 1px; */
     margin: 5px 5px 5px 5px;
     padding: 15px 15px 15px 15px;
     color:#ED1C24;
@@ -248,7 +248,7 @@
 /*------------------------------------ CONTENEDOR REGLAS -------------------------------------*/
 
 .hd-contenedor-reglas{
-  border:1px solid red;
+  /*border:1px solid red;*/
   margin-top: 30px;   /* solo arriba */
   margin-left: 0;     /* izquierda */
   margin-right: 0;    /* derecha */
@@ -262,11 +262,11 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  border: #000000 solid 1px;
+  /*border: #000000 solid 1px;*/
 }
 
 .hd-reglas-check-in , .hd-reglas-check-out{ 
-  border: #ED1C24 solid 1px;
+    /*border: #ED1C24 solid 1px;*/
     margin: 5px 5px 5px 5px;
     padding: 15px 15px 15px 15px;
     color:#ED1C24;

@@ -138,7 +138,7 @@ export default function HabitacionDetalle() {
 
   return (
     <div className="hd-contenedor">
-      <h2 className="hd-titulo">{`Habitación ${tipo?.nombre || "Habitación"}`}</h2>
+      <h2 className="hd-titulo">{`Habitación ${tipo?.nombre || "Habitación"}`} {`(Nº ${habitacion?.numero})`}</h2>
 
       {/* Miniaturas a la izquierda e imagen principal a la derecha en grande */}
       <div className="hd-contenedor-fotos">
@@ -195,10 +195,6 @@ export default function HabitacionDetalle() {
         <h3 className="hd-h3">DETALLES</h3>
         <p className="hd-text">
           {tipo?.descripcion || "Sin descripción."}
-        </p>
-
-        <p className="hd-debug">
-          Número de habitación: {habitacion?.numero} — Estado: {habitacion?.estado}
         </p>
       </div>
 
