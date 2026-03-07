@@ -1,0 +1,35 @@
+.contenedor-habitacion {
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px;
+}
+
+/* FOTO */
+.foto-principal {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.foto-principal img {
+  width: 100%;
+  max-width: 900px;
+  border-radius: 25px;
+  object-fit: cover;
+}
+
+/* INFO + FORM */
+.contenido-inferior {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+/* INFO más grande */
+.info {
+  flex: 2;   /* más grande */
+}
+
+/* FORM más pequeño */
+.formulario {
+  flex: 1;   /* más pequeño */
+}

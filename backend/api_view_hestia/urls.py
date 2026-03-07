@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from rest_framework.routers import DefaultRouter
-from .views import TipoHabitacionViewSet, HabitacionViewSet, SalaViewSet, TipoSalaViewSet
+from .views import TipoHabitacionViewSet, HabitacionViewSet, SalaViewSet, TipoSalaViewSet,ReservaHabitacionView
 
 # ROUTER VIEWSET
 router = DefaultRouter() 
@@ -18,7 +18,7 @@ urlpatterns = [
     path('admin/reservas/<int:reserva_id>/estado/', views.cambiar_estado_reserva, name='cambiar-estado-reserva'),
     path('admin/reservas/', views.listar_reservas_admin, name='listar-reservas-admin'), 
     path('admin/reservas/<int:reserva_id>/', views.detalle_reserva_admin, name='detalle-reserva-admin'),
-
+    path('reserva-habitacion/', ReservaHabitacionView.as_view()),
 ]
 
 urlpatterns = router.urls + urlpatterns

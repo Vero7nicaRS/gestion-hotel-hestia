@@ -86,7 +86,7 @@ class Reserva(models.Model):
     fecha_reserva = models.DateField()
 
     def __str__(self):
-        return f"Reserva de {self.cliente.nombre} para {self.tipo_reserva} en la fecha {self.fecha_reserva}"
+        return f"Reserva # {self.id} de {self.cliente.nombre} para {self.tipo_reserva} en la fecha {self.fecha_reserva}"
     class Meta:
         ordering = ['fecha_reserva', 'estado']
         
