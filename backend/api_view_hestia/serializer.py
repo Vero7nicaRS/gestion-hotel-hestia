@@ -27,7 +27,7 @@ class TipoSalaSerializer(serializers.ModelSerializer):
         read_only_fields = ['id']
 
 class SalaSerializer(serializers.ModelSerializer):
-    idtipo_sala=TipoHabitacionSerializer(read_only=True)
+    idtipo_sala=TipoSalaSerializer(read_only=True)
     class Meta:
         model = Sala
         fields = ['id', 'numero', 'tipo_sala', 'estado']

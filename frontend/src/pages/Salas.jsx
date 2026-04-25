@@ -13,10 +13,10 @@ import SalaPro2 from '../assets/salas/Sala-pro-2.webp'
 import SalaPro3 from '../assets/salas/Sala-pro-3.png'
 import SalaPro4 from '../assets/salas/Sala-pro-4.jpg'
 
-// Mapeo de imágenes por nombre de sala
+// Mapeo de imágenes por nombre de sala (claves en minúsculas para comparación flexible)
 const imagenesSalas = {
-  'Sala Eco': [SalaEco1, SalaEco2, SalaEco3, SalaEco4],
-  'Sala Pro': [SalaPro1, SalaPro2, SalaPro3, SalaPro4],
+  'sala eco': [SalaEco1, SalaEco2, SalaEco3, SalaEco4],
+  'sala pro': [SalaPro1, SalaPro2, SalaPro3, SalaPro4],
 }
 
 function Salas() {
@@ -76,9 +76,10 @@ function Salas() {
     setImagenSeleccionada(prev => ({ ...prev, [tipoSalaId]: imagenUrl }))
   }
 
-  // Obtener imágenes para un tipo de sala
+  // Obtener imágenes para un tipo de sala (normaliza el nombre para evitar fallos por capitalización)
   const getImagenes = (nombreSala) => {
-    return imagenesSalas[nombreSala] || []
+    const clave = nombreSala?.toLowerCase().trim()
+    return imagenesSalas[clave] || []
   }
 
   if (loading) return <div className="loading">Cargando salas...</div>
