@@ -12,7 +12,6 @@ from .models import (
 
 # REGISTRO DE MODELOS EN EL ADMIN
 
-
 @admin.register(TipoHabitacion)
 class TipoHabitacionAdmin(admin.ModelAdmin):
     list_display = ['id', 'nombre', 'precio', 'descripcion']
