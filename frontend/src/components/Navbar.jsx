@@ -32,6 +32,12 @@ function NavBar() {
               <NavDropdown.Item as={Link} to="/salas/">Pro</NavDropdown.Item>
             </NavDropdown>
             <Nav.Link as={Link} to="/contacto">Contacto</Nav.Link>
+            <NavDropdown title="Reservas" id="basic-nav-dropdown">
+              <NavDropdown.Item as={Link} to="/salas-formulario/">Reservas Salas</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item as={Link} to="/habitacion-formulario">Reservas Habitacion</NavDropdown.Item>
+            </NavDropdown>
+            <Nav.Link className="navbar-reservas" as={Link} to="/admin" >Disponibilidad</Nav.Link>
             <Nav.Link className="navbar-reservas" as={Link} to="/admin" >Administracion</Nav.Link>
 
             <Nav.Link as={Link} to="/usuario">

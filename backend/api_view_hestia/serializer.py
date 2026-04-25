@@ -10,9 +10,14 @@ class TipoHabitacionSerializer(serializers.ModelSerializer):
 
 
 class HabitacionSerializer(serializers.ModelSerializer):
+    tipo_habitacion = TipoHabitacionSerializer(read_only=True)
+    tipo_habitacion_id = serializers.PrimaryKeyRelatedField(
+        queryset=TipoHabitacion.objects.all(), source='tipo_habitacion', write_only=True
+    )
+
     class Meta:
         model = Habitacion
-        fields = ['id', 'numero', 'tipo_habitacion', 'estado']
+        fields = ['id', 'numero', 'tipo_habitacion', 'tipo_habitacion_id', 'estado']
         read_only_fields = ['id']
 
 class TipoSalaSerializer(serializers.ModelSerializer):

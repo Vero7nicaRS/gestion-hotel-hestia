@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { API_BASE_URL } from '../api/api'
 import '../styles/Salas.css'
+import FormularioSala from "../components/FormularioSala";
 
 // Importar imágenes locales
 import SalaEco1 from '../assets/salas/Sala-eco-1.jpg'
@@ -127,118 +128,9 @@ function Salas() {
       })}
 
       {/* Formulario de reserva */}
-      <section className="reserva-formulario">
-        <h2>Reservar Sala</h2>
-        <p className="subtitulo">Datos personales</p>
-        
-        <form onSubmit={handleSubmit}>
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="nombre">Nombre</label>
-              <input
-                type="text"
-                id="nombre"
-                name="nombre"
-                placeholder="Ejemplo: Juan"
-                value={formData.nombre}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="apellido">Apellido</label>
-              <input
-                type="text"
-                id="apellido"
-                name="apellido"
-                value={formData.apellido}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-          </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="correo">Correo</label>
-              <input
-                type="email"
-                id="correo"
-                name="correo"
-                value={formData.correo}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="telefono">Teléfono</label>
-              <input
-                type="tel"
-                id="telefono"
-                name="telefono"
-                value={formData.telefono}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="celular">Celular</label>
-              <input
-                type="tel"
-                id="celular"
-                name="celular"
-                value={formData.celular}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
-
-          <div className="form-row form-reserva-datos">
-            <div className="form-group">
-              <label htmlFor="fecha">Fecha</label>
-              <input
-                type="date"
-                id="fecha"
-                name="fecha"
-                value={formData.fecha}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="salon">Salón</label>
-              <select
-                id="salon"
-                name="salon"
-                value={formData.salon}
-                onChange={handleInputChange}
-                required
-              >
-                <option value="">Seleccionar...</option>
-                {tiposSala.map((tipo) => (
-                  <option key={tipo.id} value={tipo.id}>
-                    {tipo.nombre}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="form-group">
-              <label htmlFor="horario">Horario</label>
-              <input
-                type="time"
-                id="horario"
-                name="horario"
-                value={formData.horario}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-          </div>
-
-          <button type="submit" className="btn-reservar">
-            RESERVAR
-          </button>
-        </form>
-      </section>
+      <div className="formulario">
+          <FormularioSala />
+        </div>
     </div>
   )
 }

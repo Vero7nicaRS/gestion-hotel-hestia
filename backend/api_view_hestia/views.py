@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework.decorators import api_view
 from .models import Habitacion, TipoHabitacion, Sala, TipoSala, Cliente, Reserva, ReservaHabitacion, ReservaSala
 from .serializer import HabitacionSerializer, TipoHabitacionSerializer, ReservaSerializer, SalaSerializer, TipoSalaSerializer, ClienteSerializer, ReservaHabitacionSerializer, ReservaHabitacionSerializer
@@ -348,3 +349,8 @@ class ContactoAPIView(APIView):
             {"detail": "Mensaje enviado correctamente."},
             status=status.HTTP_201_CREATED,
         )
+    
+class HabitacionListView(ListAPIView):
+    def get_queryset(self):
+        return Habitacion.objects.filter(estado="DISPONIBLE")
+    serializer_class = HabitacionSerializer
