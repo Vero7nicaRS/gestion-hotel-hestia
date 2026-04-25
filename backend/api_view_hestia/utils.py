@@ -7,11 +7,7 @@ from email.mime.multipart import MIMEMultipart
 
 
 def enviar_email_confirmacion(reserva):
-    """
-    Envía email de confirmación SIN verificación SSL (desarrollo).
-    """
     try:
-        # Crear mensaje
         subject = f'Confirmación de Reserva - Hotel Hestia'
         
         if reserva.tipo_reserva == 'HABITACION':
@@ -19,7 +15,7 @@ def enviar_email_confirmacion(reserva):
             mensaje = f'''
 Estimado/a {reserva.cliente.nombre},
 
-Su reserva ha sido CONFIRMADA.
+Su reserva de habitacion ha sido CONFIRMADA.
 
 DETALLES DE LA RESERVA:
 - Tipo: Habitación {detalle.habitacion.tipo_habitacion.nombre}
@@ -38,7 +34,7 @@ Hotel Hestia
             mensaje = f'''
 Estimado/a {reserva.cliente.nombre},
 
-Su reserva ha sido CONFIRMADA.
+Su reserva de sala ha sido CONFIRMADA.
 
 DETALLES DE LA RESERVA:
 - Tipo: Sala {detalle.sala.tipo_sala.nombre}
@@ -53,25 +49,21 @@ Saludos cordiales,
 Hotel Hestia
 '''
 
-        # Crear contexto SSL sin verificación
         context = ssl.create_default_context()
         context.check_hostname = False
         context.verify_mode = ssl.CERT_NONE
 
-        # Conectar a SMTP manualmente
         with smtplib.SMTP(settings.EMAIL_HOST, settings.EMAIL_PORT, timeout=30) as server:
             server.set_debuglevel(0)
-            server.starttls(context=context)  # TLS sin verificar certificado
+            server.starttls(context=context)  
             server.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
-            
-            # Crear mensaje MIME
+
             msg = MIMEMultipart()
             msg['From'] = settings.DEFAULT_FROM_EMAIL
             msg['To'] = reserva.cliente.email
             msg['Subject'] = subject
             msg.attach(MIMEText(mensaje, 'plain'))
             
-            # Enviar
             server.send_message(msg)
             
         print(f"✅ Email de confirmación enviado a {reserva.cliente.email}")
@@ -83,9 +75,6 @@ Hotel Hestia
 
 
 def enviar_email_cancelacion(reserva, motivo=""):
-    """
-    Envía email de cancelación SIN verificación SSL (desarrollo).
-    """
     try:
         subject = f'Cancelación de Reserva - Hotel Hestia'
         
@@ -94,7 +83,7 @@ Estimado/a {reserva.cliente.nombre},
 
 Su reserva ha sido CANCELADA.
 
-MOTIVO: {motivo if motivo else "Cancelación solicitada"}
+MOTIVO: {motivo if motivo else "Cancelacion, el lugar ya a sido reservado"}
 
 Si tiene alguna duda, puede contactarnos.
 
@@ -102,25 +91,21 @@ Saludos cordiales,
 Hotel Hestia
 '''
 
-        # Crear contexto SSL sin verificación
         context = ssl.create_default_context()
         context.check_hostname = False
         context.verify_mode = ssl.CERT_NONE
 
-        # Conectar a SMTP manualmente
         with smtplib.SMTP(settings.EMAIL_HOST, settings.EMAIL_PORT, timeout=30) as server:
             server.set_debuglevel(0)
             server.starttls(context=context)
             server.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
-            
-            # Crear mensaje MIME
+          
             msg = MIMEMultipart()
             msg['From'] = settings.DEFAULT_FROM_EMAIL
             msg['To'] = reserva.cliente.email
             msg['Subject'] = subject
             msg.attach(MIMEText(mensaje, 'plain'))
-            
-            # Enviar
+    
             server.send_message(msg)
             
         print(f"✅ Email de cancelación enviado a {reserva.cliente.email}")
