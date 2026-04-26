@@ -40,19 +40,37 @@ export default function FormularioSala() {
 
   },[]);
 
-  const handleChange = (e)=>{
-    const {name,value} = e.target;
-    setFormData({...formData,[name]:value});
-  };
-
-  const handleSubmit = async (e)=>{
-
+  // change controlado + reset jornada
+    const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => {
+      const updated = { ...prev, [name]: value };
+        if (name === "jornada") {
+          updated.hora_inicio = "";
+          updated.hora_fin = "";
+        }
+        return updated;
+      });
+    };
+  // horarios según jornada
+  const horariosDisponibles =
+    formData.jornada === "manana"
+      ? horariosManana
+      : horariosTarde;
+  // solo horas válidas para fin
+  const horariosFin = horariosDisponibles.filter(
+    (h) => Number(h) > Number(formData.hora_inicio)
+  );
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if(Number(formData.hora_fin) <= Number(formData.hora_inicio)){
-      setMensaje("⚠ La hora de finalización debe ser mayor que la hora de inicio");
+    // 🔥 validación lógica
+    if (
+      Number(formData.hora_fin) <= Number(formData.hora_inicio)
+    ) {
+      setMensaje("⚠ La hora de inicio debe ser menor que la hora de fin");
       return;
     }
+
 
     const payload = {
 
@@ -89,127 +107,134 @@ export default function FormularioSala() {
   setMensaje("❌ Error: " + JSON.stringify(errorData));
   return;
 }
-      const data = await response.json();
-      setMensaje(
-      "✅ Reserva pendiente de confirmación. Confirmación enviada al correo."
-      );
+         const data = await response.json();
+      setMensaje(`✅ Reserva pendiente de confirmación. La confirmación sera enviada al correo ${formData.email}`);
+      setFormData({
+        nombre: "",
+        email: "",
+        telefono: "",
+        sala: "",
+        numero_personas: 1,
+        fecha_uso: "",
+        jornada: "",
+        hora_inicio: "",
+        hora_fin: ""
+      });
     }catch(error){
       console.error(error);
       alert("Error creando reserva");
     }
   };
 
-  const horariosDisponibles =
-    formData.jornada === "manana"
-      ? horariosManana
-      : horariosTarde;
-
   return (
 
     <form onSubmit={handleSubmit} className="card-formulario">
       <h1 className="titulo"><strong>Reservar</strong> Sala</h1>
-
-      <div className="grupo-formulario nombre">
-        <input type="text"name="nombre"placeholder="Nombre"value={formData.nombre}onChange={handleChange}required/>
-      </div>
       
 
-      <input
-        type="email"
-        name="email"
-        placeholder="Correo"
-        value={formData.email}
-        onChange={handleChange}
-        required
-      />
+      {/* DATOS PERSONALES */}
+      <div className="grupo-formulario nombre">
+        <input type="text"name="nombre"placeholder=""value={formData.nombre}onChange={handleChange}required/>
+        <label>Nombre completo</label>
+      </div>
+      
+      <div className="grupo-formulario">
+        <input type="email" name="email" placeholder="" value={formData.email} onChange={handleChange} required/>
+        <label>Correo</label>
+      </div>
+      
+      <div className="grupo-formulario">
+        <input type="text"name="telefono"placeholder=""value={formData.telefono} onChange={handleChange} pattern="[0-9]{10}"maxLength="10" required/>
+        <label>Teléfono</label>
+      </div>
 
-      <input
-        type="text"
-        name="telefono"
-        placeholder="Teléfono"
-        value={formData.telefono}
-        onChange={handleChange}
-        required
-      />
+      {/* SALAS */}
+      <div className="grupo-formulario">
+          <select  name="sala"value={formData.sala}onChange={handleChange}required>
+            <option value="" disabled hidden></option>
+            {salas.map((s) => (
+              <option key={s.id} value={s.id}>
+                Sala {s.numero} - {s.tipo_sala.nombre}
+              </option>
+            ))}
+          </select>
+          <label>Salas</label>
+        </div>
+      {/* PERSONAS */}
+      <div className="grupo-formulario">
+        <input type="number"min={1} name="numero_personas"value={formData.numero_personas} onChange={handleChange}/>
+        <label>Numero de personas</label>  
+      </div> 
+      {/* FECHA DE USO */}
+      <div className="grupo-formulario">
+        <input
+          type={formData.fecha_uso ? "date" : "text"}
+          name="fecha_uso"
+          value={formData.fecha_uso}
+          onFocus={(e) => (e.target.type = "date")}
+          onBlur={(e) => {
+            if (!e.target.value) e.target.type = "text";
+          }}
+          min={fechaMin}
+          max={fechaMax}
+          onChange={handleChange}
+          placeholder=" "
+          required
+        />
+        <label>Fecha de uso</label>
+      </div>
 
-      <select
-        name="sala"
-        value={formData.sala}
-        onChange={handleChange}
-        required
-      >
-        <option value="">Seleccione sala</option>
+      {/* JORNADA */}
+      <div className="grupo-formulario">
+        <select
+          name="jornada"
+          value={formData.jornada}
+          onChange={handleChange}
+          required
+        >
+          <option value="" disabled hidden></option>
+          <option value="manana">Mañana</option>
+          <option value="tarde">Tarde</option>
+        </select>
+        <label>Jornada</label>
+      </div>
 
-        {salas.map((s)=>(
-          <option key={s.id} value={s.id}>
-            Sala {s.numero} - {s.tipo_sala.nombre}
-          </option>
-        ))}
+      {/* HORA INICIO */}
+      <div className="grupo-formulario">
+        <select
+          name="hora_inicio"
+          value={formData.hora_inicio}
+          onChange={handleChange}
+          required
+        >
+          <option value="" disabled hidden></option>
+          {horariosDisponibles.map((hora) => (
+            <option key={hora} value={hora}>
+              {hora}:00
+            </option>
+          ))}
+        </select>
+        <label>Hora Inicio</label>
+      </div>
 
-      </select>
+      {/* HORA FIN */}
+      <div className="grupo-formulario">
+        <select
+          name="hora_fin"
+          value={formData.hora_fin}
+          onChange={handleChange}
+          required
+        >
+          <option value="" disabled hidden></option>
+          {horariosFin.map((hora) => (
+            <option key={hora} value={hora}>
+              {hora}:00
+            </option>
+          ))}
+        </select>
+        <label>Hora Fin</label>
+      </div>
 
-      <input
-        type="number"
-        name="numero_personas"
-        min="1"
-        value={formData.numero_personas}
-        onChange={handleChange}
-      />
-
-      <input
-        type="date"
-        name="fecha_uso"
-        value={formData.fecha_uso}
-        onChange={handleChange}
-        min={fechaMin}
-        max={fechaMax}
-        required
-      />
-
-      <select
-        name="jornada"
-        value={formData.jornada}
-        onChange={handleChange}
-        required
-      >
-        <option value="">Seleccione jornada</option>
-        <option value="manana">Mañana</option>
-        <option value="tarde">Tarde</option>
-      </select>
-
-      <select
-        name="hora_inicio"
-        value={formData.hora_inicio}
-        onChange={handleChange}
-        required
-      >
-
-        <option value="">Hora inicio</option>
-
-        {horariosDisponibles.map((hora)=>(
-          <option key={hora} value={hora}>
-            {hora}:00
-          </option>
-        ))}
-
-      </select>
-
-      <select
-        name="hora_fin"
-        value={formData.hora_fin}
-        onChange={handleChange}
-        required
-      >
-
-        <option value="">Hora fin</option>
-
-        {horariosDisponibles.map((hora)=>(
-          <option key={hora} value={hora}>
-            {hora}:00
-          </option>
-        ))}
-
-      </select>
 
       <button type="submit">
         Reservar Sala

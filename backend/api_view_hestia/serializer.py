@@ -2,20 +2,6 @@ from rest_framework import serializers
 from .models import Habitacion, TipoHabitacion, TipoSala, Sala, Cliente, Reserva, ReservaSala, ReservaHabitacion
 
 
-#                                   VALIDACIONES
-# SERIALIZER: Se encarga de validar que los datos que se pasado por el JSON (body) ---> Postman
-#             sean los correctos. Para que así, VIEW solamente tenga que implementar la funcionalidad
-#             y no hacer comprobaciones.
-#             Por tanto, el serializer se encarga de comprobar los datos de entrada (JSON - BODY)
-# validate_<NOMBRE_DEL_CAMPO_A_VALIDAR>
-# 
-# Serializer: permite definir que información de nuestro modelo vamos a mover hacia delante o hacia atrás
-# cuando el usuario interactue con nosotros. Y que limitaciones estamos imponiendo y validaciones adicionales.
-# Después del serializer, hay que dirigirse a la vista.
-
-#----------- SERIALIZERS -----------
-
-#----------- HABITACION API SERIALIZERS -----------
 class TipoHabitacionSerializer(serializers.ModelSerializer):
     class Meta:
         model = TipoHabitacion
@@ -23,28 +9,17 @@ class TipoHabitacionSerializer(serializers.ModelSerializer):
         read_only_fields = ['id']
 
 
-# Lo que se recibe del JSON (body):
-# {
-#  "id": 1,
-#  "numero": "253",
-#  "estado": "DISPONIBLE",
-#  "tipo_habitacion": 3
-#}     ||
-#      \/ (Lo que tiene "tipo_habitacion")
-#  "tipo_habitacion": {
-#    "id": 3,
-#    "nombre": "Doble",
-#    "precio": "90.00",
-#    "descripcion": "Habitación con literas."
-#  }
-#}
 class HabitacionSerializer(serializers.ModelSerializer):
+    tipo_habitacion = TipoHabitacionSerializer(read_only=True)
+    tipo_habitacion_id = serializers.PrimaryKeyRelatedField(
+        queryset=TipoHabitacion.objects.all(), source='tipo_habitacion', write_only=True
+    )
+
     class Meta:
         model = Habitacion
-        fields = ['id', 'numero', 'tipo_habitacion', 'estado']
+        fields = ['id', 'numero', 'tipo_habitacion', 'tipo_habitacion_id', 'estado']
         read_only_fields = ['id']
 
-#----------- SALA API SERIALIZERS -----------
 class TipoSalaSerializer(serializers.ModelSerializer):
     class Meta:
         model = TipoSala
@@ -52,34 +27,31 @@ class TipoSalaSerializer(serializers.ModelSerializer):
         read_only_fields = ['id']
 
 class SalaSerializer(serializers.ModelSerializer):
-    idtipo_sala=TipoHabitacionSerializer(read_only=True)
+    tipo_sala=TipoSalaSerializer(read_only=True)
     class Meta:
         model = Sala
         fields = ['id', 'numero', 'tipo_sala', 'estado']
         read_only_fields = ['id']
 
-#----------- CLIENTE API SERIALIZERS -----------
 class ClienteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cliente
         fields = ['id', 'nombre', 'email', 'telefono']
         read_only_fields = ['id']
 
-#----------- RESERVA API SERIALIZERS -----------
 class ReservaSerializer(serializers.ModelSerializer):
     cliente = ClienteSerializer(read_only=True)
-    #--------Observacion: Dos campos añadidos con la rama reservas-----#
     estado= serializers.CharField(source='get_estado_display', read_only=True)
-    tipo_reserva= serializers.CharField(source='get_TipoReserva', read_only=True)
+    tipo_reserva_display = serializers.CharField(source='get_tipo_reserva_display', read_only=True)
     class Meta:
         model = Reserva
-        fields = ['id', 'cliente','estado','tipo_reserva','fecha_reserva']
+        fields = ['id', 'cliente','estado','tipo_reserva','tipo_reserva_display','fecha_reserva']
         read_only_fields = ['id']
 
 class ReservaSalaSerializer(serializers.ModelSerializer):
     class Meta:
         model = ReservaSala
-        fields = ['id', 'reserva', 'sala','numero_personas','fecha_uso', 'hora_inicio', 'hora_fin']
+        fields = ['id', 'sala','numero_personas','fecha_uso', 'hora_inicio', 'hora_fin']
         read_only_fields = ['id']
 
 class ReservaHabitacionSerializer(serializers.ModelSerializer):
@@ -87,3 +59,10 @@ class ReservaHabitacionSerializer(serializers.ModelSerializer):
         model = ReservaHabitacion
         fields = ['id', 'reserva', 'habitacion','numero_personas','fecha_entrada', 'fecha_salida']
         read_only_fields = ['id','reserva']
+
+from rest_framework import serializers
+
+class ContactoSerializer(serializers.Serializer):
+    nombre = serializers.CharField(max_length=100)
+    email = serializers.EmailField()
+    mensaje = serializers.CharField(max_length=2000)

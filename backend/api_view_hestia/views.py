@@ -2,11 +2,13 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from .models import Habitacion, TipoHabitacion, Sala, TipoSala, Cliente, Reserva, ReservaHabitacion, ReservaSala
-from .serializer import HabitacionSerializer, TipoHabitacionSerializer, ReservaSerializer, SalaSerializer, TipoSalaSerializer, ClienteSerializer, ReservaHabitacionSerializer, ReservaHabitacionSerializer
+from .serializer import HabitacionSerializer, TipoHabitacionSerializer, ReservaSerializer,ReservaSalaSerializer, SalaSerializer, TipoSalaSerializer, ClienteSerializer, ReservaHabitacionSerializer, ReservaHabitacionSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Q
 from .utils import enviar_email_confirmacion, enviar_email_cancelacion
+from rest_framework.generics import ListAPIView
+from datetime import date
 
 
 
@@ -20,8 +22,11 @@ def obtener_o_crear_cliente(request):
             status=400
         )
     clientes, _ = Cliente.objects.get_or_create(
-        email=datos_cliente["email"],
-        defaults={"nombre": datos_cliente["nombre"]}
+    email=datos_cliente["email"],
+    defaults={
+        "nombre": datos_cliente["nombre"],
+        "telefono": datos_cliente["telefono"]
+        }
     )
     return clientes,  None
 #----------- ADMIN API VIEWS -----------
@@ -343,3 +348,43 @@ class ReservaHabitacionView(APIView):
                 "confirmacion": clientes.email
             },status=201)
         return Response(serializer.errors, status=400)
+#Sala
+class ReservaSalaView(APIView):
+
+    def post(self, request):
+
+        clientes, error = obtener_o_crear_cliente(request)
+        if error:
+            return error
+
+        nueva_reserva = Reserva.objects.create(
+            cliente=clientes,
+            tipo_reserva="SALA",
+            fecha_reserva=date.today()
+        )
+
+        serializer = ReservaSalaSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save(reserva=nueva_reserva)
+
+            return Response({
+                "mensaje": f"Reserva de sala creada #{nueva_reserva.id}",
+                "confirmacion_a": clientes.email
+            }, status=201)
+
+        return Response(serializer.errors, status=400)
+    
+    
+
+
+class HabitacionListView(ListAPIView):
+    def get_queryset(self):
+        return Habitacion.objects.filter(estado="DISPONIBLE")
+    serializer_class = HabitacionSerializer
+
+class SalaListView(ListAPIView):
+    def get_queryset(self):
+        return Sala.objects.filter(estado="DISPONIBLE")
+    serializer_class = SalaSerializer
+

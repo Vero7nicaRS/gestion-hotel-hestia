@@ -103,7 +103,7 @@ export default function FormularioHabitacion({ tipoHabitacion }) {
         return;
       }
       const data = await response.json();
-      setMensaje("✅ Reserva creada correctamente");
+      setMensaje(`✅ Reserva pendiente de confirmación. La confirmación sera enviada al correo ${formData.email}`);
 
       // limpiar formulario
       setFormData({

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { API_BASE_URL } from '../api/api'
 import '../styles/Salas.css'
+import FormularioSala from "../components/FormularioSala";
 
 // Importar imágenes locales
 import SalaEco1 from '../assets/salas/Sala-eco-1.jpg'
@@ -12,10 +13,10 @@ import SalaPro2 from '../assets/salas/Sala-pro-2.webp'
 import SalaPro3 from '../assets/salas/Sala-pro-3.png'
 import SalaPro4 from '../assets/salas/Sala-pro-4.jpg'
 
-// Mapeo de imágenes por nombre de sala
+// Mapeo de imágenes por nombre de sala (claves en minúsculas para comparación flexible)
 const imagenesSalas = {
-  'Sala Eco': [SalaEco1, SalaEco2, SalaEco3, SalaEco4],
-  'Sala Pro': [SalaPro1, SalaPro2, SalaPro3, SalaPro4],
+  'sala eco': [SalaEco1, SalaEco2, SalaEco3, SalaEco4],
+  'sala pro': [SalaPro1, SalaPro2, SalaPro3, SalaPro4],
 }
 
 function Salas() {
@@ -30,13 +31,12 @@ function Salas() {
   // Estado del formulario de reserva
   const [formData, setFormData] = useState({
     nombre: '',
-    apellido: '',
-    correo: '',
+    email: '',
     telefono: '',
-    celular: '',
-    fecha: '',
-    salon: '',
-    horario: ''
+    fecha_uso: '',
+    sala: '',
+    hora_inicio: '',
+    hora_fin: ''
   })
 
   // Cargar tipos de sala desde la API
@@ -75,9 +75,10 @@ function Salas() {
     setImagenSeleccionada(prev => ({ ...prev, [tipoSalaId]: imagenUrl }))
   }
 
-  // Obtener imágenes para un tipo de sala
+  // Obtener imágenes para un tipo de sala (normaliza el nombre para evitar fallos por capitalización)
   const getImagenes = (nombreSala) => {
-    return imagenesSalas[nombreSala] || []
+    const clave = nombreSala?.toLowerCase().trim()
+    return imagenesSalas[clave] || []
   }
 
   if (loading) return <div className="loading">Cargando salas...</div>
@@ -127,118 +128,9 @@ function Salas() {
       })}
 
       {/* Formulario de reserva */}
-      <section className="reserva-formulario">
-        <h2>Reservar Sala</h2>
-        <p className="subtitulo">Datos personales</p>
-        
-        <form onSubmit={handleSubmit}>
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="nombre">Nombre</label>
-              <input
-                type="text"
-                id="nombre"
-                name="nombre"
-                placeholder="Ejemplo: Juan"
-                value={formData.nombre}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="apellido">Apellido</label>
-              <input
-                type="text"
-                id="apellido"
-                name="apellido"
-                value={formData.apellido}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-          </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="correo">Correo</label>
-              <input
-                type="email"
-                id="correo"
-                name="correo"
-                value={formData.correo}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="telefono">Teléfono</label>
-              <input
-                type="tel"
-                id="telefono"
-                name="telefono"
-                value={formData.telefono}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="celular">Celular</label>
-              <input
-                type="tel"
-                id="celular"
-                name="celular"
-                value={formData.celular}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
-
-          <div className="form-row form-reserva-datos">
-            <div className="form-group">
-              <label htmlFor="fecha">Fecha</label>
-              <input
-                type="date"
-                id="fecha"
-                name="fecha"
-                value={formData.fecha}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="salon">Salón</label>
-              <select
-                id="salon"
-                name="salon"
-                value={formData.salon}
-                onChange={handleInputChange}
-                required
-              >
-                <option value="">Seleccionar...</option>
-                {tiposSala.map((tipo) => (
-                  <option key={tipo.id} value={tipo.id}>
-                    {tipo.nombre}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="form-group">
-              <label htmlFor="horario">Horario</label>
-              <input
-                type="time"
-                id="horario"
-                name="horario"
-                value={formData.horario}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-          </div>
-
-          <button type="submit" className="btn-reservar">
-            RESERVAR
-          </button>
-        </form>
-      </section>
+      <div className="formulario">
+          <FormularioSala />
+        </div>
     </div>
   )
 }

@@ -92,22 +92,15 @@ export default function HabitacionDetalle() {
     // Obtener los datos de la API: habitación y su tipo de habitación.
     const fetchHabitacion = async () => {
       try {
-        // 1) Se obtiene Habitación
+        // Se obtiene la habitación (tipo_habitacion ya viene anidado)
         const responseHabitacion = await fetch(`${API_BASE}/api/habitaciones/${id}/`);
         if (!responseHabitacion.ok){
           throw new Error(`ERROR HTTP: No se pudo cargar la habitación ${responseHabitacion.status}`);
         }
         const resultHabitacion = await responseHabitacion.json();
 
-        // 2) Se obtiene el tipo de Habitación (con el objetivo de conseguir nombre, precio y descripción)
-        const resTipo = await fetch(`${API_BASE}/api/tipos-habitacion/${resultHabitacion.tipo_habitacion}/`);
-        if (!resTipo.ok) {
-          throw new Error(`ERROR HTTP: No se pudo cargar el tipo de habitación ${resTipo.status}`);
-        }
-        const tipoData = await resTipo.json();
-
         setHabitacion(resultHabitacion);
-        setTipo(tipoData);
+        setTipo(resultHabitacion.tipo_habitacion);
       } catch (err) {
         /* Ignorar si el error de abort (no es un error real, 
         sino que es una señal de que el componente se desmontó antes
