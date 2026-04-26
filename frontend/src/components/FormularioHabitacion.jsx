@@ -150,12 +150,12 @@ export default function FormularioHabitacion({ tipoHabitacion }) {
         </div> 
 
         <div className="grupo-formulario">
-          <input type="email"name="email"value={formData.email}onChange={handleChange}requiredplaceholder=""/>
+          <input type="email"name="email"value={formData.email}onChange={handleChange}required placeholder=""/>
           <label>Correo electrónico</label>
         </div>
         
         <div className="grupo-formulario">
-          <input type="tel"name="telefono"value={formData.telefono}onChange={handleChange}pattern="[0-9]{10}"maxLength="10"requiredplaceholder=""/>
+          <input type="tel"name="telefono"value={formData.telefono}onChange={handleChange}pattern="[0-9]{10}"maxLength="10"required placeholder=""/>
           <label>Teléfono</label>
         </div>
       </div>
@@ -168,7 +168,7 @@ export default function FormularioHabitacion({ tipoHabitacion }) {
             <option value="" disabled hidden></option>
             {habitacionesFiltradas.map((h) => (
               <option key={h.id} value={h.id}>
-                Habitación {h.numero}
+                Habitación {h.numero} {h.tipo_habitacion?.nombre}
               </option>
             ))}
           </select>

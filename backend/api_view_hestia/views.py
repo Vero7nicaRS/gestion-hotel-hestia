@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 from rest_framework.decorators import api_view
 from .models import Habitacion, TipoHabitacion, Sala, TipoSala, Cliente, Reserva, ReservaHabitacion, ReservaSala
 from .serializer import HabitacionSerializer, TipoHabitacionSerializer, ReservaSerializer,ReservaSalaSerializer, SalaSerializer, TipoSalaSerializer, ClienteSerializer, ReservaHabitacionSerializer, ReservaHabitacionSerializer
@@ -7,13 +8,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Q
 from .utils import enviar_email_confirmacion, enviar_email_cancelacion
-from rest_framework.generics import ListAPIView
+from .serializer import ContactoSerializer
+from django.core.mail import send_mail
+from django.conf import settings
 from datetime import date
 
-
-
-
-#----------- OBTENER DATOS DEL CLIENTE -----------
 def obtener_o_crear_cliente(request):
     datos_cliente = request.data.get("cliente")
     if not datos_cliente:
@@ -29,12 +28,9 @@ def obtener_o_crear_cliente(request):
         }
     )
     return clientes,  None
-#----------- ADMIN API VIEWS -----------
+
 @api_view(['GET'])
 def listar_reservas_pendientes(request):
-    """
-    Llamado a todas las reservas en estado PENDIENTE, con su cliente y detalles específicos según el tipo de reserva (habitacion o sala).
-    """
     reservas = Reserva.objects.filter(
         estado=Reserva.Estado.PENDIENTE
     ).select_related(
@@ -103,11 +99,6 @@ def listar_reservas_pendientes(request):
 
 @api_view(['PATCH'])
 def cambiar_estado_reserva(request, reserva_id):
-    """
-    Cambia el estado de una reserva (CONFIRMADA o CANCELADA).
-    Si hay conflicto al confirmar, cancela automáticamente la reserva.
-    Envía notificación por email al cliente.
-    """
     try:
         reserva = Reserva.objects.select_related('cliente').get(id=reserva_id)
     except Reserva.DoesNotExist:
@@ -124,10 +115,8 @@ def cambiar_estado_reserva(request, reserva_id):
             status=status.HTTP_400_BAD_REQUEST
         )
     
-    # ✅ VALIDACIÓN: Si se va a CONFIRMAR, verificar disponibilidad
     if nuevo_estado == 'CONFIRMADA':
         
-        # --- VALIDAR HABITACIÓN ---
         if reserva.tipo_reserva == Reserva.TipoReserva.HABITACION:
             try:
                 reserva_hab = ReservaHabitacion.objects.select_related('habitacion').get(reserva=reserva)
@@ -145,11 +134,11 @@ def cambiar_estado_reserva(request, reserva_id):
                 if reservas_yareservada.exists():
                     yareservada = reservas_yareservada.first()
                     
-                    # ✅ CANCELAR AUTOMÁTICAMENTE
+                   
                     reserva.estado = 'CANCELADA'
                     reserva.save()
                     
-                    # 📧 ENVIAR EMAIL DE CANCELACIÓN
+                    
                     motivo_conflicto = f'La habitación {reserva_hab.habitacion.numero} ya tiene una reserva confirmada del {yareservada.fecha_entrada.strftime("%d/%m/%Y")} al {yareservada.fecha_salida.strftime("%d/%m/%Y")}. Por favor, elija otras fechas.'
                     email_enviado = enviar_email_cancelacion(reserva, motivo=motivo_conflicto)
                     
@@ -169,14 +158,13 @@ def cambiar_estado_reserva(request, reserva_id):
                         'accion_recomendada': 'El cliente debe crear una nueva reserva en fechas diferentes'
                     }, status=status.HTTP_200_OK)
                 
-                # Si no hay conflicto, marcar habitación como OCUPADA
+                
                 reserva_hab.habitacion.estado = Habitacion.Estado.OCUPADA
                 reserva_hab.habitacion.save()
                 
             except ReservaHabitacion.DoesNotExist:
                 pass
         
-        # --- VALIDAR SALA ---
         elif reserva.tipo_reserva == Reserva.TipoReserva.SALA:
             try:
                 reserva_sala = ReservaSala.objects.select_related('sala').get(reserva=reserva)
@@ -195,11 +183,9 @@ def cambiar_estado_reserva(request, reserva_id):
                 if reservas_yareservada.exists():
                     yareservada = reservas_yareservada.first()
                     
-                    # ✅ CANCELAR AUTOMÁTICAMENTE
                     reserva.estado = 'CANCELADA'
                     reserva.save()
                     
-                    # 📧 ENVIAR EMAIL DE CANCELACIÓN
                     motivo_conflicto = f'La sala {reserva_sala.sala.numero} ya tiene una reserva confirmada el {yareservada.fecha_uso.strftime("%d/%m/%Y")} de {yareservada.hora_inicio.strftime("%H:%M")} a {yareservada.hora_fin.strftime("%H:%M")}. Por favor, elija otro horario.'
                     email_enviado = enviar_email_cancelacion(reserva, motivo=motivo_conflicto)
                     
@@ -220,18 +206,18 @@ def cambiar_estado_reserva(request, reserva_id):
                         'accion_recomendada': 'El cliente debe crear una nueva reserva en horario diferente'
                     }, status=status.HTTP_200_OK)
                 
-                # Si no hay conflicto, marcar sala como OCUPADA
+
                 reserva_sala.sala.estado = Sala.Estado.OCUPADA
                 reserva_sala.sala.save()
                 
             except ReservaSala.DoesNotExist:
                 pass
     
-    # ✅ Actualizar estado de la reserva
+
     reserva.estado = nuevo_estado
     reserva.save()
     
-    # 📧 ENVIAR EMAIL según el nuevo estado
+
     email_enviado = False
     if nuevo_estado == 'CONFIRMADA':
         email_enviado = enviar_email_confirmacion(reserva)
@@ -249,13 +235,7 @@ def cambiar_estado_reserva(request, reserva_id):
 
 @api_view(['GET'])
 def listar_reservas_admin(request):
-    """
-    Lista reservas filtradas por estado.
-    Uso: /api/admin/reservas/?estado=PENDIENTE
-         /api/admin/reservas/?estado=CONFIRMADA
-         /api/admin/reservas/?estado=CANCELADA
-         /api/admin/reservas/ (todas)
-    """
+
     estado = request.query_params.get('estado', None)
     
     if estado:
@@ -277,10 +257,7 @@ def listar_reservas_admin(request):
 
 @api_view(['GET'])
 def detalle_reserva_admin(request, reserva_id):
-    """
-    Obtiene el detalle completo de una reserva por su ID.
-    Uso: GET /api/admin/reservas/{reserva_id}/
-    """
+
     try:
         reserva = Reserva.objects.get(pk=reserva_id)
     except Reserva.DoesNotExist:
@@ -295,9 +272,7 @@ def detalle_reserva_admin(request, reserva_id):
 
 from rest_framework import viewsets
 
-# Create your views here.
-# VIEWSETS
-# ---------------------------------------------- HABITACION ---------------------------------------------
+
 class TipoHabitacionViewSet(viewsets.ModelViewSet):
     queryset = TipoHabitacion.objects.all().order_by('nombre') # Obtener la informacion
     serializer_class = TipoHabitacionSerializer   
@@ -309,7 +284,7 @@ class HabitacionViewSet(viewsets.ModelViewSet):
     serializer_class = HabitacionSerializer
     lookup_field = 'pk'
 
-# ---------------------------------------------- SALA ---------------------------------------------
+
 class SalaViewSet(viewsets.ModelViewSet):
     queryset = Sala.objects.all()
     serializer_class = SalaSerializer
@@ -320,8 +295,7 @@ class TipoSalaViewSet(viewsets.ModelViewSet):
     serializer_class = TipoSalaSerializer
     lookup_field = 'id'
 
-#----------- RESERVA API VIEWS -----------
-#Habitacion
+
 class ReservaHabitacionView(APIView):
     def get(self, request):
         reservas = Reserva.objects.all()
@@ -388,3 +362,35 @@ class SalaListView(ListAPIView):
         return Sala.objects.filter(estado="DISPONIBLE")
     serializer_class = SalaSerializer
 
+    
+class ContactoAPIView(APIView):
+    authentication_classes = [] 
+    permission_classes = [] 
+
+    def post(self, request):
+        serializer = ContactoSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        data = serializer.validated_data
+
+        asunto = f"Nueva consulta desde HESTIA de {data['nombre']}"
+        cuerpo = (
+            f"Has recibido un nuevo mensaje desde el formulario de contacto de HESTIA.\n\n"
+            f"Nombre: {data['nombre']}\n"
+            f"Email: {data['email']}\n\n"
+            f"Mensaje:\n{data['mensaje']}\n"
+        )
+        send_mail(
+            subject=asunto,
+            message=cuerpo,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[getattr(settings, 'CONTACT_EMAIL', settings.DEFAULT_FROM_EMAIL)],
+            fail_silently=False,
+        )
+
+        return Response(
+            {"detail": "Mensaje enviado correctamente."},
+            status=status.HTTP_201_CREATED,
+        )
+    

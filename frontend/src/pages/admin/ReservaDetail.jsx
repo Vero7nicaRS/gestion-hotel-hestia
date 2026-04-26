@@ -1,6 +1,8 @@
 import React from 'react';
 
 const ReservaDetail = ({ reserva, onClose, onCambiarEstado }) => {
+  if (!reserva) return null;
+
   const handleConfirmar = () => {
     if (window.confirm('¿Confirmar esta reserva?')) {
       onCambiarEstado(reserva.id, 'CONFIRMADA');
@@ -13,130 +15,115 @@ const ReservaDetail = ({ reserva, onClose, onCambiarEstado }) => {
     }
   };
 
+  const getTipoReserva = (reserva) => {
+    // Probamos varios nombres de campo posibles
+    const raw =
+      reserva.tiporeserva ||
+      reserva.tipo_reserva ||
+      reserva.tipo ||
+      reserva.tiporeserva_display ||
+      reserva.tipo_reserva_display;
+
+    if (!raw) return '—';
+    if (raw === 'HABITACION') return 'Habitación';
+    if (raw === 'SALA') return 'Sala';
+    return raw;
+  };
+
+  const getEstadoTexto = (reserva) => {
+    return reserva.estado_display || reserva.estado || '—';
+  };
+
+  const getFechaSolicitud = (reserva) => {
+    return reserva.fecha_reserva || reserva.fecha_solicitud || '—';
+  };
+
   return (
-    <div className="admin-modal-overlay" onClick={onClose}>
-      <div className="admin-modal" onClick={(e) => e.stopPropagation()}>
-        <div className="admin-modal-header">
-          <h2 className="admin-modal-title">Detalle de Reserva #{reserva.id}</h2>
-          <button className="admin-modal-close" onClick={onClose}>
-            ✕
-          </button>
-        </div>
-
-        <div className="admin-modal-body">
-          <div className="admin-detail-section">
-            <h3>Información del Cliente</h3>
-            <div className="admin-detail-grid">
-              <div className="admin-detail-item">
-                <span className="admin-detail-label">Nombre</span>
-                <span className="admin-detail-value">{reserva.cliente?.nombre || 'N/A'}</span>
-              </div>
-              <div className="admin-detail-item">
-                <span className="admin-detail-label">Email</span>
-                <span className="admin-detail-value">{reserva.cliente?.email || 'N/A'}</span>
-              </div>
-              <div className="admin-detail-item">
-                <span className="admin-detail-label">Teléfono</span>
-                <span className="admin-detail-value">{reserva.cliente?.telefono || 'N/A'}</span>
-              </div>
+    <>
+      <div className="admin-modal-header">
+        <h2 className="admin-modal-title">
+          Detalle de Reserva #{reserva.id}
+        </h2>
+        <button className="admin-modal-close" onClick={onClose}>
+          ✕
+        </button>
+      </div>
+      <div className="admin-modal-body">
+        <div className="admin-detail-section">
+          <h3>Información del Cliente</h3>
+          <div className="admin-detail-grid">
+            <div className="admin-detail-item">
+              <span className="admin-detail-label">Nombre</span>
+              <span className="admin-detail-value">
+                {reserva.cliente?.nombre || '—'}
+              </span>
+            </div>
+            <div className="admin-detail-item">
+              <span className="admin-detail-label">Email</span>
+              <span className="admin-detail-value">
+                {reserva.cliente?.email || '—'}
+              </span>
+            </div>
+            <div className="admin-detail-item">
+              <span className="admin-detail-label">Teléfono</span>
+              <span className="admin-detail-value">
+                {reserva.cliente?.telefono || '—'}
+              </span>
             </div>
           </div>
-
-          <div className="admin-detail-section">
-            <h3>Detalles de la Reserva</h3>
-            <div className="admin-detail-grid">
-              <div className="admin-detail-item">
-                <span className="admin-detail-label">Tipo</span>
-                <span className="admin-detail-value">{reserva.tipo_reserva_display || reserva.tipo_reserva}</span>
-              </div>
-              <div className="admin-detail-item">
-                <span className="admin-detail-label">Estado</span>
-                <span className="admin-detail-value">{reserva.estado}</span>
-              </div>
-              <div className="admin-detail-item">
-                <span className="admin-detail-label">Fecha de solicitud</span>
-                <span className="admin-detail-value">
-                  {new Date(reserva.fecha_reserva).toLocaleString('es-CO')}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {reserva.detalle && (
-            <div className="admin-detail-section">
-              <h3>Información Adicional</h3>
-              <div className="admin-detail-grid">
-                {reserva.detalle.tipo === 'habitacion' ? (
-                  <>
-                    <div className="admin-detail-item">
-                      <span className="admin-detail-label">Habitación</span>
-                      <span className="admin-detail-value">{reserva.detalle.habitacion_numero}</span>
-                    </div>
-                    <div className="admin-detail-item">
-                      <span className="admin-detail-label">Tipo Habitación</span>
-                      <span className="admin-detail-value">{reserva.detalle.tipo_habitacion}</span>
-                    </div>
-                    <div className="admin-detail-item">
-                      <span className="admin-detail-label">Check-in</span>
-                      <span className="admin-detail-value">{reserva.detalle.fecha_entrada}</span>
-                    </div>
-                    <div className="admin-detail-item">
-                      <span className="admin-detail-label">Check-out</span>
-                      <span className="admin-detail-value">{reserva.detalle.fecha_salida}</span>
-                    </div>
-                    <div className="admin-detail-item">
-                      <span className="admin-detail-label">Personas</span>
-                      <span className="admin-detail-value">{reserva.detalle.numero_personas}</span>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="admin-detail-item">
-                      <span className="admin-detail-label">Sala</span>
-                      <span className="admin-detail-value">{reserva.detalle.sala_numero}</span>
-                    </div>
-                    <div className="admin-detail-item">
-                      <span className="admin-detail-label">Tipo Sala</span>
-                      <span className="admin-detail-value">{reserva.detalle.tipo_sala}</span>
-                    </div>
-                    <div className="admin-detail-item">
-                      <span className="admin-detail-label">Fecha de uso</span>
-                      <span className="admin-detail-value">{reserva.detalle.fecha_uso}</span>
-                    </div>
-                    <div className="admin-detail-item">
-                      <span className="admin-detail-label">Horario</span>
-                      <span className="admin-detail-value">
-                        {reserva.detalle.hora_inicio} - {reserva.detalle.hora_fin}
-                      </span>
-                    </div>
-                    <div className="admin-detail-item">
-                      <span className="admin-detail-label">Personas</span>
-                      <span className="admin-detail-value">{reserva.detalle.numero_personas}</span>
-                    </div>
-                  </>
-                )}
-              </div>
-            </div>
-          )}
         </div>
 
-        <div className="admin-modal-footer">
-          {reserva.estado === 'PENDIENTE' && (
-            <>
-              <button className="admin-btn admin-btn-success" onClick={handleConfirmar}>
-                ✓ Confirmar
-              </button>
-              <button className="admin-btn admin-btn-danger" onClick={handleCancelar}>
-                ✕ Cancelar
-              </button>
-            </>
-          )}
-          <button className="admin-btn admin-btn-secondary" onClick={onClose}>
-            Cerrar
-          </button>
+        {/* Reserva */}
+        <div className="admin-detail-section">
+          <h3>Detalles de la Reserva</h3>
+          <div className="admin-detail-grid">
+            <div className="admin-detail-item">
+              <span className="admin-detail-label">Tipo</span>
+              <span className="admin-detail-value">
+                {getTipoReserva(reserva)}
+              </span>
+            </div>
+            <div className="admin-detail-item">
+              <span className="admin-detail-label">Estado</span>
+              <span className="admin-detail-value">
+                {getEstadoTexto(reserva)}
+              </span>
+            </div>
+            <div className="admin-detail-item">
+              <span className="admin-detail-label">Fecha de solicitud</span>
+              <span className="admin-detail-value">
+                {getFechaSolicitud(reserva)}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+
+      <div className="admin-modal-footer">
+        {reserva.estado !== 'CONFIRMADA' && (
+          <button
+            className="admin-btn admin-btn-success"
+            onClick={handleConfirmar}
+          >
+            Confirmar
+          </button>
+        )}
+        {reserva.estado !== 'CANCELADA' && (
+          <button
+            className="admin-btn admin-btn-danger"
+            onClick={handleCancelar}
+          >
+            Cancelar
+          </button>
+        )}
+        <button
+          className="admin-btn admin-btn-secondary"
+          onClick={onClose}
+        >
+          Cerrar
+        </button>
+      </div>
+    </>
   );
 };
 

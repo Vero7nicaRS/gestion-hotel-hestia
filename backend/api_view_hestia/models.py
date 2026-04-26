@@ -1,20 +1,10 @@
 from django.db import models
 
-# Se definen los modelos que va a tener la gestión hotelera Hestia:
-# - Tipohabitacion: detalle concreto de la habitación. 
-# - Habitacion.
-# - Tiposala: detalle concreto de la sala.
-# - Sala.
-# - Cliente.
-# - Reserva.
-# - Reserva_habitacion.
-# - Reserva_sala.
 
-# --------------------------------------------- HABITACION ---------------------------------------------
 class TipoHabitacion(models.Model):
     nombre = models.CharField(max_length=100)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
-    descripcion = models.CharField(max_length=250, blank=True) # Descripción opcional
+    descripcion = models.CharField(max_length=250, blank=True)
     
     def __str__(self):
         return f"{self.nombre} - ${self.precio}"
@@ -25,7 +15,7 @@ class TipoHabitacion(models.Model):
     
 class Habitacion(models.Model):
     numero = models.CharField(max_length=10, unique=True)
-    tipo_habitacion = models.ForeignKey(TipoHabitacion, on_delete=models.CASCADE) # FK
+    tipo_habitacion = models.ForeignKey(TipoHabitacion, on_delete=models.CASCADE) 
     class Estado(models.TextChoices):
         DISPONIBLE = "DISPONIBLE", "Disponible"
         OCUPADA = "OCUPADA", "Ocupada"
@@ -36,11 +26,10 @@ class Habitacion(models.Model):
     class Meta:
         ordering = ['numero']
     
-# --------------------------------------------- SALA ---------------------------------------------
 class TipoSala(models.Model):
     nombre = models.CharField(max_length=100)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
-    descripcion = models.CharField(max_length=250, blank=True) # Descripción opcional
+    descripcion = models.CharField(max_length=250, blank=True) 
     
     def __str__(self):
         return f"{self.nombre} - ${self.precio}"
@@ -49,7 +38,7 @@ class TipoSala(models.Model):
     
 class Sala(models.Model):
     numero = models.CharField(max_length=10, unique=True)
-    tipo_sala = models.ForeignKey(TipoSala, on_delete=models.CASCADE) # FK
+    tipo_sala = models.ForeignKey(TipoSala, on_delete=models.CASCADE) 
     class Estado(models.TextChoices):
         DISPONIBLE = "DISPONIBLE", "Disponible"
         OCUPADA = "OCUPADA", "Ocupada"
@@ -60,7 +49,6 @@ class Sala(models.Model):
     class Meta:
         ordering = ['numero', 'estado']
 
-# --------------------------------------------- CLIENTE ---------------------------------------------   
 class Cliente(models.Model):
     nombre = models.CharField(max_length=100)
     email = models.EmailField(max_length=65, unique=True)
@@ -70,10 +58,9 @@ class Cliente(models.Model):
         return self.nombre
     class Meta:
         ordering = ['nombre']
-
-# ----------------------------------------------- RESERVA -----------------------------------------------   
+ 
 class Reserva(models.Model):
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE) # FK
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE) 
     class TipoReserva(models.TextChoices):
         HABITACION = "HABITACION", "Habitación"
         SALA = "SALA", "Sala"
@@ -91,8 +78,8 @@ class Reserva(models.Model):
         ordering = ['fecha_reserva', 'estado']
         
 class ReservaHabitacion(models.Model):
-    habitacion = models.ForeignKey(Habitacion, on_delete=models.CASCADE) # FK
-    reserva =models.OneToOneField(Reserva, on_delete=models.CASCADE) # FK
+    habitacion = models.ForeignKey(Habitacion, on_delete=models.CASCADE) 
+    reserva =models.OneToOneField(Reserva, on_delete=models.CASCADE) 
     numero_personas = models.PositiveIntegerField()
     fecha_entrada = models.DateField()
     fecha_salida = models.DateField()
@@ -107,10 +94,10 @@ class ReservaHabitacion(models.Model):
         ordering = ['fecha_entrada', 'fecha_salida']
 
 class ReservaSala(models.Model):
-    sala = models.ForeignKey(Sala, on_delete=models.CASCADE) # FK
-    reserva =models.OneToOneField(Reserva, on_delete=models.CASCADE) # FK
+    sala = models.ForeignKey(Sala, on_delete=models.CASCADE) 
+    reserva =models.OneToOneField(Reserva, on_delete=models.CASCADE) 
     numero_personas = models.PositiveIntegerField()
-    fecha_uso = models.DateField() # Fecha en la que se usará la sala
+    fecha_uso = models.DateField()
     hora_inicio = models.TimeField()
     hora_fin = models.TimeField()
 
