@@ -83,9 +83,7 @@ export default function Home (){
 
           </div>
         </section>
-        <footer>
-          <h2>dvnsdjdsn</h2>
-        </footer>
+
       </div>
     </>
   )

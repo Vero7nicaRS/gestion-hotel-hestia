@@ -13,21 +13,21 @@
 
 
 /* H1, H2, H3 y H4 */
-.hd-h4{
+.sd-h4{
   font-family: 'italic';
   color:#ED1C24;
   margin-bottom:20px;
 }
 
 
-.hd-contenedor{
+.sd-contenedor{
   background: white;
   padding: 20px;
 }
 
 /* Título */
 
-.hd-titulo{
+.sd-titulo{
   text-align:center;
   font-size:35px;
   color:#606060;
@@ -36,7 +36,7 @@
 
 /*------------------------------------ CONTENEDOR FOTOS (PRINCIPAL) -------------------------------------*/
 
-.hd-contenedor-fotos{
+.sd-contenedor-fotos{
 
   /* Propiedades Flexbox */
   display:flex;
@@ -48,30 +48,30 @@
 
 /*------------------------------------ CONTENEDOR MINIATURAS (Fotos pequeñas) -------------------------------------*/
 
-.hd-contenedor-miniaturas{
+.sd-contenedor-miniaturas{
   /* Propiedades Flexbox */
   display:flex;
   flex-direction:column;
   gap:10px;
 }
 
-.hd-miniatura{
+.sd-miniatura{
   cursor:pointer;
   border-radius:10px;
   overflow:hidden;
   border:3px solid transparent;
 }
 
-.hd-miniatura.activa{
+.sd-miniatura.activa{
   border:3px solid #ED1C24; /* La imagen que esté como principal, se señalará en rojo en la miniatura */
 }
 
-.hd-miniatura:hover{
+.sd-miniatura:hover{
   border-color: #ED1C24;
   transform: scale(1.05);
 }
 
-.hd-miniatura img{
+.sd-miniatura img{
   width:120px;
   height:80px;
   object-fit:cover;
@@ -79,7 +79,7 @@
 }
 
 /* Imagen principal (grande) */
-.hd-foto-principal{
+.sd-foto-principal{
   width:400px;
   height:300px;
   max-width:100%;
@@ -88,21 +88,21 @@
   flex: 1;
 }
 
-.hd-foto-principal img{
+.sd-foto-principal img{
   width:100%;
   height:100%;
   object-fit:cover;
 }
 
 /*------------------------------------ CONTENEDOR BOTONES (Fotos pequeñas) -------------------------------------*/
-.hd-contenedor-botones-fotos{
+.sd-contenedor-botones-fotos{
   display:flex;
   justify-content:center;
   gap:20px;
   margin-top:10px;
 }
 
-.hd-contenedor-botones-fotos button{
+.sd-contenedor-botones-fotos button{
   padding:10px 20px;
   background-color:#ED1C24;
   font-family: 'poppinsLight';
@@ -113,7 +113,7 @@
   cursor:pointer;
 }
 
-.hd-contenedor-botones-fotos button:hover{
+.sd-contenedor-botones-fotos button:hover{
   padding:10px 20px;
   background-color:#e8666a;
   color:white;
@@ -122,7 +122,7 @@
 }
 /*------------------------------------ CONTENEDOR PRECIOS -------------------------------------*/
 
-.hd-contenedor-precios{
+.sd-contenedor-precios{
   border:1px solid rgb(0, 0, 0);
   box-shadow:0 2px 8px rgba(0,0,0,0.1);
   background:#F2F2F2 ;
@@ -138,7 +138,7 @@
   margin-right: 0;    /* derecha */
 }
 
-.hd-contenedor-precios-izq-der{
+.sd-contenedor-precios-izq-der{
   
   /* Propiedades Flexbox */
   display: flex;
@@ -149,13 +149,13 @@
 }
 
 
-.hd-precios-dinero{ 
+.sd-precios-dinero{ 
     margin: 5px 15px 5px 5px;
     padding: 15px 15px 15px 15px;
 }
 
 /* [icono] texto */
-.hd-precios-iconos{
+.sd-precios-iconos{
   display:flex;
   align-items:center;
   gap:10px;
@@ -163,25 +163,25 @@
   padding:5px;
 }
 
-.hd-iconos-texto{
+.sd-iconos-texto{
   font-size:14px;
   color:#606060;
 }
 
-.hd-iconos{
+.sd-iconos{
     border: #ED1C24 solid 1px;
     border-radius:10px;
     width: 50px;
     height: 50px;
 }
 
-.hd-precio{
+.sd-precio{
   /*border: #ED1C24 solid 1px;*/
   font-size:50px;
   font-weight:bold;
 }
 
-.hd-precio-noche{
+.sd-precio-noche{
   /*border:#000000  solid 1px;*/
   font-size:13px;
   color:#606060;
@@ -189,7 +189,7 @@
 
 /*------------------------------------ CONTENEDOR DETALLES -------------------------------------*/
 
-.hd-contenedor-detalles{
+.sd-contenedor-detalles{
   /*border:1px solid red;*/
   margin-top: 30px;   /* solo arriba */
   margin-left: 0;     /* izquierda */
@@ -198,13 +198,13 @@
 }
 
 
-.hd-h3{
+.sd-h3{
   color:#ED1C24;
   margin-top:10px;
   
 }
 
-.hd-text{
+.sd-text{
   margin: 5px 15px 5px 5px;
   padding: 15px 15px 15px 15px;
   font-size: 18px;
@@ -212,61 +212,64 @@
 }
 
 
-/*------------------------------------ CONTENEDOR REGLAS -------------------------------------*/
+/*------------------------------------ CONTENEDOR COMODIDADES -------------------------------------*/
 
-.hd-contenedor-reglas{
+.sd-contenedor-comodidades{
   /*border:1px solid red;*/
   margin-top: 30px;   /* solo arriba */
   margin-left: 0;     /* izquierda */
   margin-right: 0;    /* derecha */
   text-align: justify;
-
 }
-.hd-contenedor-reglas-izq-der{
-  
+
+
+.sd-contenedor-comodidades-izq-der{
   /* Propiedades Flexbox */
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
-  /*border: #000000 solid 1px;*/
+
+  /*border: #e030ea solid 1px;*/
 }
 
-.hd-reglas-check-in , .hd-reglas-check-out{ 
-    /*border: #ED1C24 solid 1px;*/
+.sd-comodidades-izq , .sd-comodidades-der{ 
+   /* border: #7bf762 solid 1px; */
     margin: 5px 5px 5px 5px;
     padding: 15px 15px 15px 15px;
     color:#ED1C24;
 }
 
-.hd-reglas-check-inout-guiones{
-    color:#000000;
+
+.sd-text{
+  line-height:1.5;
 }
+
+
 
 /* ---------------- RESPONSIVE ---------------- */
 @media (max-width: 768px){
-  .hd-contenedor-fotos{
+  .sd-contenedor-fotos{
     flex-direction: column;
     align-items: center;
   }
 
-  .hd-contenedor-miniaturas{
+  .sd-contenedor-miniaturas{
     flex-direction: row;
     justify-content: center;
   }
 
-  .hd-miniatura img{
+  .sd-miniatura img{
     width: 80px;
     height: 60px;
   }
 
-  .hd-imagen-principal{
+  .sd-imagen-principal{
     width: 100%;
     height: 260px;
   }
 
 
-  .hd-contenedor-detalles{
+  .sd-contenedor-detalles{
     margin-left: 0;
     margin-right: 0;
   }

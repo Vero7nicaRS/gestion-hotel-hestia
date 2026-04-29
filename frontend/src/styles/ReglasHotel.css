@@ -1,0 +1,74 @@
+@font-face {
+  font-family: 'poppinsR';
+  src: url('./src/ttf/poppins-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'poppinsB';
+  src: url('./src/ttf/Poppins-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'poppinsI';
+  src: url('./src/ttf/Poppins-Italic.ttf') format('truetype');
+}
+
+/*------------------------------------ CONTENEDOR REGLAS -------------------------------------*/
+
+.rh-contenedor-reglas{
+  /*border:1px solid red;*/
+  margin-top: 30px;   /* solo arriba */
+  margin-left: 0;     /* izquierda */
+  margin-right: 0;    /* derecha */
+  text-align: justify;
+
+}
+.rh-contenedor-reglas-izq-der{
+  
+  /* Propiedades Flexbox */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  /*border: #000000 solid 1px;*/
+}
+
+.rh-reglas-check-in , .rh-reglas-check-out{ 
+    /*border: #ED1C24 solid 1px;*/
+    margin: 5px 5px 5px 5px;
+    padding: 15px 15px 15px 15px;
+    color:#ED1C24;
+}
+
+.rh-reglas-check-inout-guiones{
+    color:#000000;
+    font-size: 18px;
+    margin: 5px 15px 5px 5px;
+    padding: 5px 5px 5px 55px;
+    line-height:1.5;
+}
+.rh-reglas-check-inout-guiones li {
+  margin-bottom: 12px;
+}
+
+.rh-text{
+  margin: 5px 15px 5px 5px;
+  padding: 15px 15px 15px 15px;
+  font-size: 18px;
+  line-height:1.5;
+  
+}
+
+/* H1, H2, H3 y H4 */
+
+.rh-h3{
+  color:#ED1C24;
+  margin-top:10px;
+}
+
+
+.rh-h4{
+  font-family:  'poppinsI', sans-serif;;
+  color:#ED1C24;
+  margin-bottom:20px;
+}
+
+
