@@ -51,7 +51,7 @@ function CardHabitacion({ hab }) {
           </p>
           <p className="disp-info__label">Precio Noche</p>
           <p className={`disp-info__valor ${disponible ? 'disp-valor--disponible' : 'disp-valor--ocupada'}`}>
-            {tipo.precio || '—'}
+            {tipo.precio + ' €'|| '— €'}
           </p>
           {disponible && (
             <Link to={`/habitacion/${hab.id}`} className="disp-btn-ver">
@@ -66,8 +66,7 @@ function CardHabitacion({ hab }) {
 
 function CardSala({ sala }) {
   const disponible = sala.estado === 'DISPONIBLE'
-  // El serializer expone el tipo anidado como "idtipo_sala"
-  const tipo = sala.idtipo_sala || {}
+  const tipo = sala.tipo_sala || {}
 
   return (
     <div className={`disp-card ${disponible ? 'disp-card--disponible' : 'disp-card--ocupada'}`}>
@@ -88,10 +87,10 @@ function CardSala({ sala }) {
           </p>
           <p className="disp-info__label">{disponible ? 'Precio' : 'Horario'}</p>
           <p className={`disp-info__valor ${disponible ? 'disp-valor--disponible' : 'disp-valor--ocupada'}`}>
-            {disponible ? (tipo.precio || '—') : (sala.horario || '—')}
+            {disponible ? (tipo.precio + ' €' || '— €') : (sala.horario || '—')}
           </p>
           {disponible && (
-            <Link to="/salas" className="disp-btn-ver">
+            <Link to={`/sala/${sala.id}`} className="disp-btn-ver">
               Ver
             </Link>
           )}
@@ -114,6 +113,7 @@ export default function Disponibilidad() {
           fetch(`${API_BASE_URL}/habitaciones/`),
           fetch(`${API_BASE_URL}/salas/`),
         ])
+
         if (!resHab.ok) throw new Error('Error al cargar habitaciones')
         if (!resSala.ok) throw new Error('Error al cargar salas')
 
@@ -121,9 +121,13 @@ export default function Disponibilidad() {
           resHab.json(),
           resSala.json(),
         ])
-
+  
         setHabitaciones(Array.isArray(dataHab) ? dataHab : dataHab.results || [])
         setSalas(Array.isArray(dataSala) ? dataSala : dataSala.results || [])
+        console.log("Habi: ", dataHab);
+        console.log("Sala: ", dataSala);
+
+
       } catch (err) {
         setError(err.message)
       } finally {
