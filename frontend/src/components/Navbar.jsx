@@ -11,7 +11,7 @@ function NavBar() {
   return (
     <Navbar expand="lg" className="navbar-contenedor" fixed="top">
       <Container>
-        <Navbar.Brand as={Link} to="/">
+        <Navbar.Brand Link as={Link} to="/">
             <img className="navbar-logo" src={logoHestia} alt = "Logo blanco Hestia"/>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
