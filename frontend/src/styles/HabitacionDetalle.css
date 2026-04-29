@@ -212,39 +212,6 @@
 }
 
 
-/*------------------------------------ CONTENEDOR COMODIDADES -------------------------------------*/
-
-.hd-contenedor-comodidades{
-  /*border:1px solid red;*/
-  margin-top: 30px;   /* solo arriba */
-  margin-left: 0;     /* izquierda */
-  margin-right: 0;    /* derecha */
-  text-align: justify;
-}
-
-
-.hd-contenedor-comodidades-izq-der{
-  /* Propiedades Flexbox */
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-
-  /*border: #e030ea solid 1px;*/
-}
-
-.hd-comodidades-izq , .hd-comodidades-der{ 
-   /* border: #7bf762 solid 1px; */
-    margin: 5px 5px 5px 5px;
-    padding: 15px 15px 15px 15px;
-    color:#ED1C24;
-}
-
-
-.hd-text{
-  line-height:1.5;
-}
-
-
 /*------------------------------------ CONTENEDOR REGLAS -------------------------------------*/
 
 .hd-contenedor-reglas{
