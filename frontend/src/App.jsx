@@ -37,8 +37,8 @@ function App() {
         <Route path="/sencilla" element={<Sencilla />} />
         <Route path="/contacto" element={<Contact />} />
         <Route path="/disponibilidad" element={<Disponibilidad />} />
-        <Route path="/form-habitacion" element={<FormularioHabitacion />} />
-        <Route path="/form-sala" element={<FormularioSala />} />
+        <Route path="/habitacion-formulario" element={<FormularioHabitacion />} />
+        <Route path="/sala-formulario" element={<FormularioSala />} />
         <Route path="/login-administracion" element={<LoginAdmin onLoginSuccess={handleAdminLogin} />}/>
         <Route path="/admin" element={isAdminAuthenticated ? (<AdminDashboard />) : (<Navigate to="/login-administracion" replace />)}/>
         <Route path="*" element={<p>404: Página no encontrada</p>} />
