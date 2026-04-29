@@ -11,6 +11,7 @@ import Sencilla from "./pages/Sencilla";
 import Contact from "./pages/Contact"; 
 import FormularioHabitacion from "./components/FormularioHabitacion";
 import FormularioSala from "./components/FormularioSala";
+import Disponibilidad from "./pages/Disponibilidad";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/contacto" element={<Contact />} />
         <Route path="/habitacion-formulario" element={<FormularioHabitacion/>} />  
         <Route path="/salas-formulario" element={<FormularioSala/>} />
+        <Route path="/disponibilidad" element={<Disponibilidad />} />
         <Route path="*" element={<p>404: Página no encontrada</p>} />
       </Routes>
 
