@@ -1,0 +1,100 @@
+@font-face {
+  font-family: 'poppinsR';
+  src: url('./src/ttf/poppins-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'poppinsB';
+  src: url('./src/ttf/Poppins-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'poppinsI';
+  src: url('./srv/ttf/Poppins-Italic.ttf') format('truetype');
+}
+
+
+.ch-text{
+  margin: 5px 15px 5px 5px;
+  padding: 15px 15px 15px 15px;
+  font-size: 18px;
+  line-height:1.5;
+}
+.ch-text{
+  line-height:1.5;
+}
+
+.ch-h3{
+  color:#ED1C24;
+  margin-top:10px;
+  
+}
+
+.ch-text{
+  margin: 5px 15px 5px 5px;
+  padding: 15px 15px 15px 15px;
+  font-size: 18px;
+  line-height:1.5;
+}
+
+
+
+/*------------------------------------ CONTENEDOR COMODIDADES -------------------------------------*/
+
+.ch-contenedor-comodidades{
+  /*border:1px solid red;*/
+  margin-top: 30px;   /* solo arriba */
+  margin-left: 0;     /* izquierda */
+  margin-right: 0;    /* derecha */
+  text-align: justify;
+}
+
+
+.ch-contenedor-comodidades-izq-der{
+  /* Propiedades Flexbox */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  /*border: #e030ea solid 1px;*/
+}
+
+.ch-comodidades-izq , .ch-comodidades-der{ 
+   /* border: #7bf762 solid 1px; */
+    margin: 5px 5px 5px 5px;
+    padding: 15px 15px 15px 15px;
+    color:#ED1C24;
+}
+
+
+.hd-text{
+  line-height:1.5;
+}
+
+
+.ch-iconos-texto{
+  font-size:14px;
+  color:#606060;
+}
+
+.ch-iconos{
+    border: #ED1C24 solid 1px;
+    border-radius:10px;
+    width: 50px;
+    height: 50px;
+}
+
+/* [icono] texto */
+.ch-precios-iconos{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:5px 15px 5px 5px;
+  padding:5px;
+}
+
+.ch-iconos{
+    border: #ED1C24 solid 1px;
+    border-radius:10px;
+    width: 50px;
+    height: 50px;
+}
+
