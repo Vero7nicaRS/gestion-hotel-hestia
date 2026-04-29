@@ -31,13 +31,12 @@ function Salas() {
   // Estado del formulario de reserva
   const [formData, setFormData] = useState({
     nombre: '',
-    apellido: '',
-    correo: '',
+    email: '',
     telefono: '',
-    celular: '',
-    fecha: '',
-    salon: '',
-    horario: ''
+    fecha_uso: '',
+    sala: '',
+    hora_inicio: '',
+    hora_fin: ''
   })
 
   // Cargar tipos de sala desde la API
@@ -78,7 +77,7 @@ function Salas() {
     setImagenSeleccionada(prev => ({ ...prev, [tipoSalaId]: imagenUrl }))
   }
 
-  // Obtener imágenes para un tipo de sala (búsqueda flexible)
+  // Obtener imágenes para un tipo de sala
   const getImagenes = (nombreSala) => {
     // Primero intenta coincidencia exacta
     if (imagenesSalas[nombreSala]) {

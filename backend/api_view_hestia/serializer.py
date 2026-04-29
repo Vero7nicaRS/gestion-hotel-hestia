@@ -27,9 +27,7 @@ class TipoSalaSerializer(serializers.ModelSerializer):
         read_only_fields = ['id']
 
 class SalaSerializer(serializers.ModelSerializer):
-    idtipo_sala = TipoSalaSerializer(read_only=True)
-    horario = serializers.SerializerMethodField()
-
+    tipo_sala=TipoSalaSerializer(read_only=True)
     class Meta:
         model = Sala
         fields = ['id', 'numero', 'tipo_sala', 'idtipo_sala', 'estado', 'horario']
@@ -62,7 +60,7 @@ class ReservaSerializer(serializers.ModelSerializer):
 class ReservaSalaSerializer(serializers.ModelSerializer):
     class Meta:
         model = ReservaSala
-        fields = ['id', 'reserva', 'sala','numero_personas','fecha_uso', 'hora_inicio', 'hora_fin']
+        fields = ['id', 'sala','numero_personas','fecha_uso', 'hora_inicio', 'hora_fin']
         read_only_fields = ['id']
 
 class ReservaHabitacionSerializer(serializers.ModelSerializer):
@@ -70,8 +68,6 @@ class ReservaHabitacionSerializer(serializers.ModelSerializer):
         model = ReservaHabitacion
         fields = ['id', 'reserva', 'habitacion','numero_personas','fecha_entrada', 'fecha_salida']
         read_only_fields = ['id','reserva']
-
-from rest_framework import serializers
 
 class ContactoSerializer(serializers.Serializer):
     nombre = serializers.CharField(max_length=100)
