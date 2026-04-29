@@ -150,9 +150,7 @@ function NavBar() {
               <NavDropdown.Item as={Link} to="/habitacion-formulario">Reservas Habitacion</NavDropdown.Item>
             </NavDropdown>
             <Nav.Link className="navbar-reservas" as={Link} to="/disponibilidad" >Disponibilidad</Nav.Link>
-            <Nav.Link className="navbar-reservas" as={Link} to="/admin" >Administracion</Nav.Link>
-
-            <Nav.Link as={Link} to="/usuario">
+            <Nav.Link as={Link} to="/admin">
               <img className="navbar-usuario" src={iconoUsuario} alt = "Logo blanco Hestia"/>
             </Nav.Link>
           </Nav>

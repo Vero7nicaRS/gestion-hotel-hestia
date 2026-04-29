@@ -130,8 +130,32 @@ const AdminDashboard = () => {
             />
           </div>
         </div>
+        
       )}
+       <section className="admin-advanced">
+        <h2 className="admin-advanced-title">
+          Administración avanzada (Django)
+        </h2>
+        <p className="admin-advanced-text">
+          Acceso exclusivo para administración superior. 
+          Se abrirá en una nueva pestaña usando el panel original de Django.
+        </p>
+        <p className="admin-advanced-text">
+          Acceso a editar habitaciones, crear habitaciones,editar salas, crear sala y editar precios.
+        </p>
+
+
+        <a
+          href="http://127.0.0.1:8000/admin/login/?next=/admin/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="admin-btn admin-btn-secondary"
+        >
+          Administración Avanzada
+        </a>
+      </section>
     </main>
+    
   );
 };
 
