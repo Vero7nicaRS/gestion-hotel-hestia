@@ -11,7 +11,7 @@ function NavBar() {
   return (
     <Navbar expand="lg" className="navbar-contenedor" fixed="top">
       <Container>
-        <Navbar.Brand Link as={Link} to="/">
+        <Navbar.Brand as={Link} to="/">
             <img className="navbar-logo" src={logoHestia} alt = "Logo blanco Hestia"/>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -37,7 +37,7 @@ function NavBar() {
               <NavDropdown.Divider />
               <NavDropdown.Item as={Link} to="/habitacion-formulario">Reservas Habitacion</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link className="navbar-reservas" as={Link} to="/admin" >Disponibilidad</Nav.Link>
+            <Nav.Link className="navbar-reservas" as={Link} to="/disponibilidad" >Disponibilidad</Nav.Link>
             <Nav.Link className="navbar-reservas" as={Link} to="/admin" >Administracion</Nav.Link>
 
             <Nav.Link as={Link} to="/usuario">

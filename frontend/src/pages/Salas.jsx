@@ -13,10 +13,10 @@ import SalaPro2 from '../assets/salas/Sala-pro-2.webp'
 import SalaPro3 from '../assets/salas/Sala-pro-3.png'
 import SalaPro4 from '../assets/salas/Sala-pro-4.jpg'
 
-// Mapeo de imágenes por nombre de sala
+// Mapeo de imágenes por nombre de sala (búsqueda flexible)
 const imagenesSalas = {
-  'Sala Eco': [SalaEco1, SalaEco2, SalaEco3, SalaEco4],
-  'Sala Pro': [SalaPro1, SalaPro2, SalaPro3, SalaPro4],
+  'SalaEco': [SalaEco1, SalaEco2, SalaEco3, SalaEco4],
+  'SalaPro': [SalaPro1, SalaPro2, SalaPro3, SalaPro4],
 }
 
 function Salas() {
@@ -47,6 +47,8 @@ function Salas() {
         const response = await fetch(`${API_BASE_URL}/tipo-salas/`)
         if (!response.ok) throw new Error('Error al cargar las salas')
         const data = await response.json()
+        console.log('Salas cargadas del API:', data)
+        console.log('Nombres de salas:', data.map(s => s.nombre))
         setTiposSala(data)
         setLoading(false)
       } catch (err) {
@@ -76,9 +78,30 @@ function Salas() {
     setImagenSeleccionada(prev => ({ ...prev, [tipoSalaId]: imagenUrl }))
   }
 
-  // Obtener imágenes para un tipo de sala
+  // Obtener imágenes para un tipo de sala (búsqueda flexible)
   const getImagenes = (nombreSala) => {
-    return imagenesSalas[nombreSala] || []
+    // Primero intenta coincidencia exacta
+    if (imagenesSalas[nombreSala]) {
+      return imagenesSalas[nombreSala]
+    }
+    
+    // Luego busca por coincidencia parcial (sin espacios)
+    const nombreSinEspacios = nombreSala.replace(/\s+/g, '')
+    for (const [clave, imagenes] of Object.entries(imagenesSalas)) {
+      if (clave === nombreSinEspacios) {
+        return imagenes
+      }
+    }
+    
+    // Si no encuentra, busca por palabra clave (Eco, Pro)
+    if (nombreSala.toLowerCase().includes('eco')) {
+      return imagenesSalas['SalaEco'] || []
+    }
+    if (nombreSala.toLowerCase().includes('pro')) {
+      return imagenesSalas['SalaPro'] || []
+    }
+    
+    return []
   }
 
   if (loading) return <div className="loading">Cargando salas...</div>

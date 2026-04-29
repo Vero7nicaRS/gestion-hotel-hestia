@@ -1,0 +1,191 @@
+@font-face {
+  font-family: 'poppinsR';
+  src: url('../assets/fonts/Poppins-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'poppinsB';
+  src: url('../assets/fonts/Poppins-Bold.ttf') format('truetype');
+}
+
+/* ========== CONTENEDOR ========== */
+.disp-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+  font-family: 'poppinsR', sans-serif;
+}
+
+/* ========== SECCIÓN ========== */
+.disp-seccion {
+  margin-bottom: 3rem;
+}
+
+/* ========== TÍTULO ========== */
+.disp-titulo {
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: #222;
+  margin-bottom: 1.5rem;
+  font-family: 'poppinsR', sans-serif;
+}
+
+.disp-titulo__rojo {
+  font-family: 'poppinsB', sans-serif;
+  font-weight: 800;
+  color: #ED1C24;
+}
+
+/* ========== GRID ========== */
+.disp-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2rem;
+}
+
+/* ========== CARD ========== */
+.disp-card {
+  border-radius: 16px;
+  padding: 1rem 1rem 1.2rem;
+  border: 1px solid transparent;
+}
+
+.disp-card--disponible {
+  background-color: #f0fff4;
+  border-color: #b2f0c5;
+}
+
+.disp-card--ocupada {
+  background-color: #fff5f5;
+  border-color: #ffd0d0;
+}
+
+/* ========== HEADER DE LA CARD ========== */
+.disp-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.disp-card__tipo {
+  font-size: 0.95rem;
+  font-family: 'poppinsB', sans-serif;
+  font-weight: 700;
+}
+
+.disp-tipo--disponible { color: #16a34a; }
+.disp-tipo--ocupada    { color: #ED1C24; }
+
+/* ========== BADGE ========== */
+.disp-card__badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.22rem 0.85rem;
+  border-radius: 999px;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+
+.disp-badge--disponible { background-color: #16a34a; }
+.disp-badge--ocupada    { background-color: #ED1C24; }
+
+/* ========== CUERPO DE LA CARD ========== */
+.disp-card__body {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.disp-card__img {
+  width: 160px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+/* ========== INFO ========== */
+.disp-card__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.88rem;
+  color: #444;
+}
+
+.disp-info__numero {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.disp-info__hash {
+  font-family: 'poppinsB', sans-serif;
+  font-weight: 700;
+}
+
+.disp-info__label {
+  color: #555;
+  margin-top: 0.2rem;
+}
+
+.disp-info__valor {
+  font-size: 1rem;
+  font-family: 'poppinsB', sans-serif;
+  font-weight: 700;
+}
+
+.disp-valor--disponible { color: #16a34a; }
+.disp-valor--ocupada    { color: #ED1C24; }
+
+/* ========== BOTÓN VER ========== */
+.disp-btn-ver {
+  display: inline-block;
+  margin-top: 0.6rem;
+  padding: 0.2rem 1.1rem;
+  border: 1.5px solid #555;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  color: #333;
+  text-decoration: none;
+  width: fit-content;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.disp-btn-ver:hover {
+  background-color: #333;
+  color: #fff;
+  border-color: #333;
+}
+
+/* ========== ESTADOS ========== */
+.disp-estado {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.disp-estado--error { color: #ED1C24; }
+
+.disp-vacio {
+  color: #999;
+  font-style: italic;
+  grid-column: 1 / -1;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 640px) {
+  .disp-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .disp-card__img {
+    width: 120px;
+    height: 85px;
+  }
+
+  .disp-titulo {
+    font-size: 1.7rem;
+  }
+}

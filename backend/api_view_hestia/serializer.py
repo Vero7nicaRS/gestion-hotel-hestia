@@ -27,11 +27,22 @@ class TipoSalaSerializer(serializers.ModelSerializer):
         read_only_fields = ['id']
 
 class SalaSerializer(serializers.ModelSerializer):
-    idtipo_sala=TipoHabitacionSerializer(read_only=True)
+    idtipo_sala = TipoSalaSerializer(read_only=True)
+    horario = serializers.SerializerMethodField()
+
     class Meta:
         model = Sala
-        fields = ['id', 'numero', 'tipo_sala', 'estado']
+        fields = ['id', 'numero', 'tipo_sala', 'idtipo_sala', 'estado', 'horario']
         read_only_fields = ['id']
+
+    def get_horario(self, obj):
+        reserva = ReservaSala.objects.filter(
+            sala=obj,
+            reserva__estado='CONFIRMADA'
+        ).order_by('-reserva__fecha_reserva').first()
+        if reserva:
+            return f"{reserva.hora_inicio.strftime('%H:%M')} - {reserva.hora_fin.strftime('%H:%M')}"
+        return None
 
 class ClienteSerializer(serializers.ModelSerializer):
     class Meta:
