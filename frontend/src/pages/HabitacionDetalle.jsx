@@ -202,6 +202,11 @@ export default function HabitacionDetalle() {
      
      <ReglasHotel tipo="habitacion" />
 
+
+      {/* Formulario de reserva */}
+      <div className="formulario">
+        <FormularioHabitacion />
+      </div>
     </div>
   );
 }
