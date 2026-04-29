@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "../styles/HabitacionDetalle.css";
+import ReglasHotel from "../components/ReglasHotel";
+import ComodidadesHotel from "../components/ComodidadesHotel";
 
 // Imágenes de las habitaciones 
 import fotoBano from "../assets/habitacion/premium-bano.png";
@@ -92,15 +94,16 @@ export default function HabitacionDetalle() {
     // Obtener los datos de la API: habitación y su tipo de habitación.
     const fetchHabitacion = async () => {
       try {
-        // Se obtiene la habitación (tipo_habitacion ya viene anidado)
-        const responseHabitacion = await fetch(`${API_BASE}/api/habitaciones/${id}/`);
+        // Se obtiene el tipo de habitación.
+        const responseHabitacion = await fetch(`${API_BASE}/api/tipos-habitacion/${id}/`);
         if (!responseHabitacion.ok){
           throw new Error(`ERROR HTTP: No se pudo cargar la habitación ${responseHabitacion.status}`);
         }
         const resultHabitacion = await responseHabitacion.json();
+        console.log('Habitaciones cargadas del API:', resultHabitacion);
 
         setHabitacion(resultHabitacion);
-        setTipo(resultHabitacion.tipo_habitacion);
+        setTipo(resultHabitacion);
       } catch (err) {
         /* Ignorar si el error de abort (no es un error real, 
         sino que es una señal de que el componente se desmontó antes
@@ -193,113 +196,11 @@ export default function HabitacionDetalle() {
         </p>
       </div>
 
-      <div className="hd-contenedor-comodidades">
-        <h3 className="hd-h3">COMODIDADES</h3>
-        <p className="hd-text"> 
-          Todas nuestras habitaciones disponen de conexión Wi-Fi gratuita, parking privado, servicio de desayuno y caja fuerte.
-           
-          Están diseñadas para ofrecer una estancia comoda y acogedora, con todo lo necesario para que los huéspedes disfruten de su visita y
-          se sientan como en casa. 
-        </p>
-          
-        <div className="hd-contenedor-comodidades-izq-der"> 
-          <div className="hd-comodidades-izq">
-            <div className="hd-precios-iconos">     
-              <img className="hd-iconos" src={iconoWifi} alt = "Icono rojo WiFi"/>
-              <span className="hd-iconos-texto">WiFi</span>
-            </div>
-
-            <div className="hd-precios-iconos">     
-              <img className="hd-iconos" src={iconoTelevision} alt = "Icono rojo televisión"/>
-              <span className="hd-iconos-texto">Televisión</span>
-            </div>
-
-            <div className="hd-precios-iconos">     
-              <img className="hd-iconos" src={iconoCoche} alt = "Icono rojo coche"/>
-              <span className="hd-iconos-texto">Parqueadero</span>
-            </div>
-            
-          </div>
-
-          <div className="hd-comodidades-der">
-            <div className="hd-precios-iconos">     
-              <img className="hd-iconos" src={iconoDesayuno} alt = "Icono rojo desayuno"/>
-              <span className="hd-iconos-texto">Desayuno</span>
-            </div>
-
-            <div className="hd-precios-iconos">     
-              <img className="hd-iconos" src={iconoCajaFuerte} alt = "Icono rojo caja fuerte"/>
-              <span className="hd-iconos-texto">Caja fuerte</span>
-            </div>
-
-          </div>  
-        </div>
-      </div>
+      {/* Comodidades */}
+      <ComodidadesHotel tipo="habitacion" />
       
-      <div className="hd-contenedor-reglas">
-        <h3 className="hd-h3">REGLAS</h3>
-        
-        <div className="hd-contenedor-reglas-izq-der"> 
-          <div className="hd-reglas-check-in">
-            <h4 className="hd-h4">Check-in</h4>
-            <ul className="hd-reglas-check-inout-guiones"> 
-              <li>
-                A partir de las 14:00 horas.
-              </li>
-            </ul>
-          </div>
-
-          <div className="hd-reglas-check-out">
-            <h4 className="hd-h4">Check-out</h4>
-            <ul className="hd-reglas-check-inout-guiones">
-              <li>
-                Hasta las 12:00 horas.
-              </li>
-            </ul>
-          </div>  
-
-
-          <div className="hd-reglas-check-in">
-            <h4 className="hd-h4">Normas del hotel</h4>
-
-            <ul className="hd-reglas-check-inout-guiones"> 
-              <li>
-                Es obligatorio presentar DNI o pasaporte a la llegada al hotel.
-              </li>
-              <li>
-                No se permiten mascotas, excepto animales de asistencia.
-              </li>
-              <li>
-                Está prohibido fumar en zonas comunes y habitaciones del hotel.
-              </li>
-              <li>
-                Se deben utilizar las instalaciones de manera responsable y respetuosa, evitando ruidos excesivos o comportamientos que puedan molestar a otros huéspedes.
-              </li>
-              <li>
-                Se debe respetar el descanso de los demás huéspedes, especialmente durante la noche.
-              </li>
-              <li>
-                Se debe ser respetuoso con el personal del hotel y otros huéspedes.
-              </li>  
-              <li>
-                Cualquier daño material, el huesped es responsable del mismo y deberá abonar el coste de reparación o reposición.
-              </li>
-              <li>
-                Está prohibido realizar fiestas o eventos en las habitaciones del hotel. 
-              </li>                          
-              
-            </ul>
-            <p className="hd-text"> 
-              El incumplimiento de estas normas puede provocar la <b>cancelación</b> de la reserva <b>sin reembolso</b>. 
-              En casos graves, en la <b>expulsión</b> del hotel sin derecho a reembolso.
-            </p>
-          </div>
-        </div>
-      <div className="formulario">
-          <FormularioHabitacion tipoHabitacion={tipo?.nombre || "Premium"} />
-        </div>
-        
-      </div>
+     
+     <ReglasHotel tipo="habitacion" />
 
     </div>
   );
