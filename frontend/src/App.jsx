@@ -1,6 +1,7 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HabitacionDetalle from "./pages/HabitacionDetalle";
+import SalaDetalle from "./pages/SalaDetalle";
 import NavBar from "./components/NavBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Footer from "./components/Footer";
@@ -22,6 +23,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/habitacion/:id" element={<HabitacionDetalle />} />
+        <Route path="/sala/:id" element={<SalaDetalle />} />
         <Route path="/salas" element={<Salas />} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/sencilla" element={<Sencilla />} />
