@@ -114,14 +114,35 @@ function NavBar() {
                   {index < habitaciones.length - 1 && <NavDropdown.Divider />}
                 </Fragment>
               ))}
-             
+            </NavDropdown>
+
+            <NavDropdown title="Salas" id="basic-nav-dropdown">
+              {/* Recorre los tipos de salas y devuelve la sala junto a un separador.
+                  Si es la última sala, no se muestra el separador. 
+              */}
+              {salas && salas.map((sala, index) => (
+                <Fragment key={sala.id}>
+                  <NavDropdown.Item 
+                    as={Link} 
+                    to={`/sala/${sala.id}`}>
+                      {sala.nombre}
+                  </NavDropdown.Item>
+
+                  {/* Si no es la última habitación, se muestra un separador. */}
+                  {index < salas.length - 1 && <NavDropdown.Divider />}
+                </Fragment>
+              ))}
             </NavDropdown>
    
-            <NavDropdown title="Salas" id="basic-nav-dropdown">
+          {/*
+           <NavDropdown title="Salas" id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to="/salas/">Eco</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item as={Link} to="/salas/">Pro</NavDropdown.Item>
             </NavDropdown>
+          
+          */}  
+         
             <Nav.Link as={Link} to="/contacto">Contacto</Nav.Link>
             <NavDropdown title="Reservas" id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to="/salas-formulario/">Reservas Salas</NavDropdown.Item>
