@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "../styles/Formulario.css";
 
-export default function FormularioSala() {
+export default function FormularioSala({tipoSala}) {
 
   const [salas, setSalas] = useState([]);
 
@@ -29,6 +29,16 @@ export default function FormularioSala() {
   const fechaMax = tresMeses.toISOString().split("T")[0];
 
   const [mensaje, setMensaje] = useState("");
+  //filtro para saber cual información mostrar segun el tipo de sala
+  const salasFiltradas = tipoSala
+  ? salas.filter(
+      (s) =>
+        s.estado === "DISPONIBLE" &&
+        s.tipo_sala &&
+        s.tipo_sala.nombre &&
+        s.tipo_sala?.nombre?.toLowerCase() === tipoSala?.toLowerCase?.()
+    )
+  : salas.filter((h) => h.estado === "DISPONIBLE");
 
   // Obtener salas disponibles
   useEffect(()=>{
@@ -152,7 +162,7 @@ export default function FormularioSala() {
       <div className="grupo-formulario">
           <select  name="sala"value={formData.sala}onChange={handleChange}required>
             <option value="" disabled hidden></option>
-            {salas.map((s) => (
+            {salasFiltradas.map((s) => (
               <option key={s.id} value={s.id}>
                 Sala {s.numero} - {s.tipo_sala.nombre}
               </option>

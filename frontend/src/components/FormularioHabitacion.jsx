@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "../styles/Formulario.css";
 
-export default function FormularioHabitacion({ tipoHabitacion }) {
+export default function FormularioHabitacion({ tipoHabitacion, habitacionId }) {
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
@@ -62,7 +62,16 @@ export default function FormularioHabitacion({ tipoHabitacion }) {
       setPrecioTotal(0);
     }
   }, [formData, habitaciones]);
-   
+  // poner id seleccionado en disponibilidad en el formulario
+  useEffect(() => {
+    if (habitacionId) {
+      setFormData((prev) => ({
+        ...prev,
+        habitacion: habitacionId.toString(),
+      }));
+    }
+  }, [habitacionId]);
+    
   //Actualizar inputs usados por el cliente
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -145,7 +145,7 @@ function NavBar() {
          
             <Nav.Link as={Link} to="/contacto">Contacto</Nav.Link>
             <NavDropdown title="Reservas" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Link} to="/salas-formulario">Reservas Salas</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/sala-formulario">Reservas Salas</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item as={Link} to="/habitacion-formulario">Reservas Habitacion</NavDropdown.Item>
             </NavDropdown>

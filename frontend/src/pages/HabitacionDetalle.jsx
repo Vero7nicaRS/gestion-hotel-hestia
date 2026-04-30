@@ -205,7 +205,10 @@ export default function HabitacionDetalle() {
 
       {/* Formulario de reserva */}
       <div className="formulario">
-        <FormularioHabitacion />
+        <FormularioHabitacion
+          tipoHabitacion={tipo?.nombre || "Premium"} 
+          habitacionId={id}
+        />
       </div>
     </div>
   );
