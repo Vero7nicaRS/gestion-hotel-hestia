@@ -1,0 +1,327 @@
+[
+{
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$D9pVPYaIHuKXfuWq8lkr0x$3T8Qc7vhSmHuhGW127g4BK/Z7x2z4YXRJScBN7es+fA=",
+        "last_login": "2026-04-27T18:20:55.859Z",
+        "is_superuser": true,
+        "username": "usuario",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2026-04-27T18:20:37.121Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "bhgw7p37hxgx2vh2pqyhrc3xo114buzd",
+    "fields": {
+        "session_data": ".eJxVjEEOwiAQRe_C2pBhAggu3XsGMsOgVA1NSrtqvLtt0oVu_3vvryrRMte09DKlQdRFGXX63Zjyq7QdyJPaY9R5bPM0sN4VfdCub6OU9_Vw_w4q9brVkMlZPiNEl71xgFHQ0h2Q0QDHgl58tDmgbF4wXpjIOLQGAAJCUJ8vvjA2hQ:1wHQZj:o5lUC8Le7ZpaegxcEtS9kBzhkfDZqaE_ng3C6R2dxvE",
+        "expire_date": "2026-05-11T18:20:55.868Z"
+    }
+},
+{
+    "model": "api_view_hestia.tipohabitacion",
+    "pk": 1,
+    "fields": {
+        "nombre": "Sencilla",
+        "precio": "45.00",
+        "descripcion": "Es una habitación muy sencilla"
+    }
+},
+{
+    "model": "api_view_hestia.tipohabitacion",
+    "pk": 2,
+    "fields": {
+        "nombre": "Premium",
+        "precio": "350.00",
+        "descripcion": "Es una habitación con 2 camas y vistas al mar"
+    }
+},
+{
+    "model": "api_view_hestia.tipohabitacion",
+    "pk": 3,
+    "fields": {
+        "nombre": "Familiar",
+        "precio": "75.00",
+        "descripcion": "Cuatro camas individuales"
+    }
+},
+{
+    "model": "api_view_hestia.habitacion",
+    "pk": 1,
+    "fields": {
+        "numero": "507",
+        "tipo_habitacion": 1,
+        "estado": "DISPONIBLE"
+    }
+},
+{
+    "model": "api_view_hestia.habitacion",
+    "pk": 2,
+    "fields": {
+        "numero": "432",
+        "tipo_habitacion": 2,
+        "estado": "DISPONIBLE"
+    }
+},
+{
+    "model": "api_view_hestia.habitacion",
+    "pk": 3,
+    "fields": {
+        "numero": "3",
+        "tipo_habitacion": 3,
+        "estado": "OCUPADA"
+    }
+},
+{
+    "model": "api_view_hestia.tiposala",
+    "pk": 1,
+    "fields": {
+        "nombre": "Eco",
+        "precio": "50.00",
+        "descripcion": "eco"
+    }
+},
+{
+    "model": "api_view_hestia.tiposala",
+    "pk": 2,
+    "fields": {
+        "nombre": "Pro",
+        "precio": "175.00",
+        "descripcion": "Sala pro"
+    }
+},
+{
+    "model": "api_view_hestia.sala",
+    "pk": 1,
+    "fields": {
+        "numero": "5",
+        "tipo_sala": 1,
+        "estado": "DISPONIBLE"
+    }
+},
+{
+    "model": "api_view_hestia.sala",
+    "pk": 2,
+    "fields": {
+        "numero": "8",
+        "tipo_sala": 2,
+        "estado": "DISPONIBLE"
+    }
+},
+{
+    "model": "api_view_hestia.cliente",
+    "pk": 1,
+    "fields": {
+        "nombre": "Pepito",
+        "email": "mskdfkdsfkdkfslf@gmail.com",
+        "telefono": "0000000000"
+    }
+},
+{
+    "model": "api_view_hestia.reserva",
+    "pk": 1,
+    "fields": {
+        "cliente": 1,
+        "estado": "CONFIRMADA",
+        "tipo_reserva": "HABITACION",
+        "fecha_reserva": "2026-04-29"
+    }
+},
+{
+    "model": "api_view_hestia.reservahabitacion",
+    "pk": 1,
+    "fields": {
+        "habitacion": 3,
+        "reserva": 1,
+        "numero_personas": 1,
+        "fecha_entrada": "2026-04-30",
+        "fecha_salida": "2026-05-02"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+        "action_time": "2026-04-27T18:22:10.890Z",
+        "user": [
+            "usuario"
+        ],
+        "content_type": [
+            "api_view_hestia",
+            "tiposala"
+        ],
+        "object_id": "1",
+        "object_repr": "Eco - $50",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+        "action_time": "2026-04-27T18:22:15.758Z",
+        "user": [
+            "usuario"
+        ],
+        "content_type": [
+            "api_view_hestia",
+            "sala"
+        ],
+        "object_id": "1",
+        "object_repr": "Sala 5 - Eco",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 3,
+    "fields": {
+        "action_time": "2026-04-27T18:22:28.049Z",
+        "user": [
+            "usuario"
+        ],
+        "content_type": [
+            "api_view_hestia",
+            "tiposala"
+        ],
+        "object_id": "2",
+        "object_repr": "Pro - $175",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 4,
+    "fields": {
+        "action_time": "2026-04-27T18:22:33.360Z",
+        "user": [
+            "usuario"
+        ],
+        "content_type": [
+            "api_view_hestia",
+            "sala"
+        ],
+        "object_id": "2",
+        "object_repr": "Sala 8 - Pro",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 5,
+    "fields": {
+        "action_time": "2026-04-27T18:22:58.878Z",
+        "user": [
+            "usuario"
+        ],
+        "content_type": [
+            "api_view_hestia",
+            "tipohabitacion"
+        ],
+        "object_id": "1",
+        "object_repr": "Sencilla - $45",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 6,
+    "fields": {
+        "action_time": "2026-04-27T18:23:00.654Z",
+        "user": [
+            "usuario"
+        ],
+        "content_type": [
+            "api_view_hestia",
+            "habitacion"
+        ],
+        "object_id": "1",
+        "object_repr": "Habitación 507 - Sencilla",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 7,
+    "fields": {
+        "action_time": "2026-04-27T18:23:26.388Z",
+        "user": [
+            "usuario"
+        ],
+        "content_type": [
+            "api_view_hestia",
+            "tipohabitacion"
+        ],
+        "object_id": "2",
+        "object_repr": "Premium - $350",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 8,
+    "fields": {
+        "action_time": "2026-04-27T18:23:28.143Z",
+        "user": [
+            "usuario"
+        ],
+        "content_type": [
+            "api_view_hestia",
+            "habitacion"
+        ],
+        "object_id": "2",
+        "object_repr": "Habitación 432 - Premium",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 9,
+    "fields": {
+        "action_time": "2026-04-27T18:23:57.860Z",
+        "user": [
+            "usuario"
+        ],
+        "content_type": [
+            "api_view_hestia",
+            "tipohabitacion"
+        ],
+        "object_id": "3",
+        "object_repr": "Familiar - $75",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 10,
+    "fields": {
+        "action_time": "2026-04-27T18:23:59.714Z",
+        "user": [
+            "usuario"
+        ],
+        "content_type": [
+            "api_view_hestia",
+            "habitacion"
+        ],
+        "object_id": "3",
+        "object_repr": "Habitación 3 - Familiar",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
+    }
+}
+]
